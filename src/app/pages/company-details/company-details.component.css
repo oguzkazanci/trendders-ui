@@ -1,0 +1,22 @@
+.header {
+    background: rgb(119,82,98);
+    background: radial-gradient(circle, rgba(119,82,98,1) 0%, rgba(5,6,80,1) 100%)
+}
+
+.btn-add {
+    color: white;
+    background-color: #429547; 
+    border-color: #429547;
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    width: 160px;
+}
+
+.form-control-alternative {    
+    color: black;
+}
+
+.form-control {    
+    color: black;
+}

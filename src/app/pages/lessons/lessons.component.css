@@ -1,0 +1,92 @@
+:host {
+  display: block;
+  text-align: center;
+}
+
+.form-control-alternative {
+  color: black;
+}
+
+.form-control {
+  color: black;
+}
+
+.btn-warning {
+  color: #fff;
+  border-color: orange;
+  background-color: #fb9a40;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.btn-add {
+  color: white;
+  background-color: #429547; 
+  border-color: #429547;
+  position: absolute;
+  top: -20px;
+  right: 30px;
+  width: 140px;
+}
+
+.btn-publisher {
+  color: white;
+  background-color: #965633; 
+  border-color: #965633;
+  width: 100%;
+  top: 32px;
+  float: left;
+}
+
+.header {
+  background: rgb(119,82,98);
+  background: radial-gradient(circle, rgba(119,82,98,1) 0%, rgba(5,6,80,1) 100%)
+}
+
+.tab{
+  align-items: left;
+  padding:10px 20px;
+  margin:0px 2px;
+  background:#5069AB;
+  display:inline-block;
+  color:#fff;
+  border-radius:10px 0px 0px 0px;
+  box-shadow: 0 0.0rem 0.0rem #cd8500;
+  z-index: 0;
+  position: relative; 
+}
+.panels{
+  overflow:hidden;
+}
+.panel{
+  display:none;
+  animation: fadein .6s;
+}
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+.panel-title{
+  font-size:1.5em;
+  font-weight:bold
+}
+.radio{
+  display:none;
+}
+#one:checked ~ .panels #one-panel,
+#two:checked ~ .panels #two-panel,
+#three:checked ~ .panels #three-panel,
+#four:checked ~ .panels #four-panel{
+  display:block
+}
+#one:checked ~ .tabs #one-tab,
+#two:checked ~ .tabs #two-tab,
+#three:checked ~ .tabs #three-tab,
+#four:checked ~ .tabs #four-tab{
+  background:#fffffff6;
+  color:#000;
+  border-top: 3px solid #112F3B;
+}

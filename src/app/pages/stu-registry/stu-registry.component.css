@@ -1,0 +1,71 @@
+.form-control-alternative
+{    
+    color: black;
+}
+
+.form-control
+{    
+    color: black;
+}
+
+.header {
+    background: rgb(119,82,98);
+    background: radial-gradient(circle, rgba(119,82,98,1) 0%, rgba(5,6,80,1) 100%)
+}
+
+.first-letter {
+    text-transform: capitalize;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.p-dialog.p-confirm-dialog {
+  z-index: 999;
+  border-style: groove;
+  .p-confirm-dialog-message {
+    color: #333333;
+  }
+  .p-dialog-header { 
+    background-color: #090951 !important; 
+    color: white !important; 
+    .p-dialog-header-icon { 
+      color: white !important; 
+    } 
+  }
+  .p-dialog-content { 
+    background-color: #725162 !important; 
+    color: white !important; 
+    height: 120px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  } 
+  .p-dialog-footer { 
+    background-color: #422f5a !important; 
+    color: white !important; 
+  }
+}
+
+.p-calendar {
+  z-index: 999;
+}
+
+table td {
+  border-left: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}
+
+table th {
+  border-left: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+}

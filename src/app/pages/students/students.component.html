@@ -1,0 +1,131 @@
+<div class="header pb-5 pt-5 pt-md-8">    
+</div>
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <!-- üst bar -->
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col-3">
+                <h3 class="mb-0" style="text-align: left;">Öğrenci İşleri</h3>
+              </div>
+              <div class="col ml-auto">
+                <a href="#/stu-registry" class="btn btn-add" (click)="clear()">Öğrenci Ekle</a>
+              </div>
+            </div>
+          </div>
+          <!-- tablo -->
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" style="width: 30px;"></th>
+                  <th scope="col" style="text-align: left;">Öğrenci</th>
+                  <th scope="col">Öğr. Cep Tel.</th>
+                  <th scope="col">Sınıf</th>
+                  <th scope="col">Son Ders Tarihi</th>
+                  <th scope="col">Veli</th>
+                  <th scope="col" *ngIf="userRole == 'ADMIN'">Veli Cep Tel.</th>
+                  <th scope="col" *ngIf="userRole == 'ADMIN'">Kayıt Türü</th>
+                  <th scope="col" *ngIf="userRole == 'ADMIN'">Dosya</th>
+                  <th scope="col" *ngIf="userRole == 'ADMIN'">Düzenle</th>
+                  <th scope="col" *ngIf="userRole == 'ADMIN'">Sil</th>
+                </tr>
+              </thead>
+              <tbody>    
+                <tr *ngFor="let student of students">
+                  <th scope="row">
+                    <span class="dot" *ngIf="(student.regState == 0)"></span>    
+                    <span class="dot-warning" *ngIf="(student.regState == 1)"></span>  
+                    <span class="dot-fail" *ngIf="(student.regState == 2)"></span>            
+                  </th>
+                  <th scope="row">
+                    <div class="media align-items-center">
+                       <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                        </a> -->
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{student.name}} {{student.surname}}</span>
+                      </div>
+                    </div>
+                  </th>
+                  <td>
+                    {{student.phoneNumber}}
+                  </td>
+                  <th scope="row">
+                    <div *ngFor="let grade of grades">
+                      <span *ngIf="(grade.gradeId == student.gradeId)">{{grade.grade}}</span>
+                    </div>                  
+                  </th>
+                  <td>
+                    <div *ngFor="let event of events">
+                      <span *ngIf="student.studentId == event.studentId">{{event.date | date:'dd-MM-yyyy'}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    {{student.parent}}
+                  </td>
+                  <td *ngIf="userRole == 'ADMIN'">
+                    {{student.parentPhoNo}}
+                  </td>
+                  <td *ngIf="userRole == 'ADMIN'">
+                    <span *ngIf="(student.regType == 0)">Paket</span>
+                    <span *ngIf="(student.regType == 1)">Özel Ders</span>
+                  </td>
+                  <td *ngIf="userRole == 'ADMIN'">
+                    <button type="button" class="btn btn-primary" (click)="downloadPdf(student.studentId)">
+                        <span class="btn-inner--icon"><i class="fas fa-file-pdf"></i></span>
+                    </button>
+                  </td>
+                  <td *ngIf="userRole == 'ADMIN'">
+                    <button type="button" class="btn btn-warning" (click)="edit(student.studentId)">
+                        <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                    </button>
+                  </td>
+                  <td *ngIf="userRole == 'ADMIN'">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="onPreviewDeleteModal(student.studentId)">
+                        <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                    </button>
+                  </td>
+                </tr>               
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+
+<!-- Delete Modal Screen -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="deleteModalLongTitle">UYARI</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <a>Silmek istediğinize emin misiniz?</a>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6">
+            <button id="deleteStuButton" class="btn btn-success btn-danger" (click)="delete()">Sil</button>
+          </div>
+          <div class="form-group col-lg-6">
+            <button id="closeDeleteModal" class="btn btn-success btn-default" class="btn btn-secondary btn-default" data-dismiss="modal">İptal</button>
+          </div> 
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" routerLinkActive="active" [routerLink]="getPath()">{{getTitle()}}</a>
+    <!-- Form -->
+    <!--<form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+      <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+        <div class="input-group input-group-alternative">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" placeholder="Search" type="text" (focus)="focus = true"
+          (blur)="focus = false">
+        </div>
+      </div>
+    </form> -->
+    <!-- User -->
+    <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <li class="nav-item" ngbDropdown placement="bottom-right">
+        <a class="nav-link pr-0 notification" role="button" ngbDropdownToggle (click)="getNotifications()">
+          <span class="fas fa-bell">
+            <span class="badge">{{notSize}}</span>
+          </span>
+        </a>
+        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu *ngIf="notSize == 0;else others">
+          <div class=" dropdown-header noti-title">
+            <h6 class="text-overflow m-0" *ngIf="notSize == 0">Bildirim yok!</h6>
+          </div>
+        </div>
+        <ng-template #others>
+          <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0" *ngIf="notSize == 0">Bildirimler</h6>
+            </div>
+            <div *ngFor="let notification of notifications">
+              <a class="dropdown-item" data-toggle="modal" data-target="#eventNotificationModal">{{notification.description}}</a>
+            </div>
+          </div></ng-template>
+      </li>
+      <li class="nav-item" ngbDropdown placement="bottom-right">
+        <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+          <div class="media align-items-center">
+            <span class="avatar avatar-sm rounded-circle" style="margin-right: 5px;">
+              <img alt="Image placeholder" src="assets/img/theme/profil-pic.jpg">
+            </span>
+            <div class="media-body ml-2 d-none d-lg-block">
+              <div class="row">
+                <div class="col-sm-6">
+                  <span class="mb-0 text-sm font-weight-bold">{{userFullName}}</span>
+                </div>
+              </div>
+              <div class="row mt-0.002">
+                <div class="col-sm-6">
+                  <span class="mb-0 text-xs">{{userRole | lowercase}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+          <div class=" dropdown-header noti-title">
+            <h6 class="text-overflow m-0">Hoşgeldiniz!</h6>
+          </div>
+          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+            <i class="ni ni-single-02"></i>
+            <span>Profilim</span>
+          </a>
+          <!-- <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+            <i class="ni ni-settings-gear-65"></i>
+            <span>Ayarlar</span>
+          </a>
+          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
+            <i class="ni ni-support-16"></i>
+            <span>Destek</span>
+          </a>-->
+          <a routerLinkActive="active" [routerLink]="['/company-details']" class="dropdown-item">
+            <i class="ni ni-building"></i>
+            <span>Firma Bilgileri</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#!" class="dropdown-item" (click)="logout()">
+            <i class="ni ni-user-run"></i>
+            <span>Çıkış</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="modal fade" id="eventNotificationModal" tabindex="-1" role="dialog" aria-labelledby="eventNotificationModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="eventNotificationModalLongTitle">Bildirim</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="background-color: #f7fafc;">  
+            <span>Bu ders gerçekleşti mi?</span>    
+          </div>
+          <div class="modal-footer">
+              <button id="closeEventNotificationModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">İptal</button>
+              <button type="button" class="btn btn-secondary">Beklet</button>
+              <button type="button" class="btn btn-success btn-primary">Onayla</button>
+          </div>
+      </div>
+  </div>
+</div>

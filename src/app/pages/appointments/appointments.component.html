@@ -1,0 +1,233 @@
+<div class="header pb-5 pt-5 pt-md-8">
+</div>
+
+<!-- Calendar-->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <!-- Calendar Header -->
+        <div class="card-header border-0">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <h3 class="mb-0" style="text-align: left;">Dersler</h3>
+            </div>
+            <div class="col ml-auto">
+              <a id="addAppointment" type="button" class="btn btn-add" data-toggle="modal" data-target="#addEventModal" (click)="openModal()">
+                Ders Ekle
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Calendar Main -->
+        <div class="card">
+          <div>
+            <full-calendar class="calendar" id="calendar" [options]="calendarOptions" [deepChangeDetection]="true"></full-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <!-- Table Card Header -->
+        <div class="card-header border-0">
+          <form class="row row-cols-sm-auto">
+            <div class="col-3">
+              <div class="dp-hidden position-absolute">
+                <div class="input-group">
+                  <input
+                    name="datepicker"
+                    class="form-control"
+                    ngbDatepicker
+                    #datepicker="ngbDatepicker"
+                    [autoClose]="'outside'"
+                    (dateSelect)="onDateSelection($event)"
+                    [displayMonths]="2"
+                    [dayTemplate]="t"
+                    outsideDays="hidden"
+                    [startDate]="fromDate!"
+                    tabindex="-1"
+                  />
+                  <ng-template #t let-date let-focused="focused">
+                    <span
+                      class="custom-day"
+                      [class.focused]="focused"
+                      [class.range]="isRange(date)"
+                      [class.faded]="isHovered(date) || isInside(date)"
+                      (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null"
+                    >
+                      {{ date.day }}
+                    </span>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="input-group">
+                <input
+                  #dpFromDate
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dpFromDate"
+                  [value]="formatter.format(fromDate)"
+                  (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+                />
+                <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"></button>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="input-group">
+                <input
+                  #dpToDate
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dpToDate"
+                  [value]="formatter.format(toDate)"
+                  (input)="toDate = validateInput(toDate, dpToDate.value)"
+                />
+                <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button"></button>
+              </div>
+            </div>            
+            <div class="col text-right">
+              <button (click)="getEventsByDateRange()" type="button" class="btn btn-success btn-primary">Listele</button>
+            </div>
+          </form>
+        </div>
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+          <!-- Table Header -->
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" style="width: 30px;"></th>
+                <th scope="col">Öğrenci</th>
+                <th scope="col">Öğretmen</th>
+                <th scope="col">Ders</th>
+                <th scope="col">Ders Tarihi</th>
+                <th scope="col">Düzenle</th>
+              </tr>
+            </thead>
+            <!-- Table Body -->
+            <tbody>
+              <tr *ngFor="let event of events">
+                <th scope="row">
+                  <span class="dot" *ngIf="(event.eventStatus == 1)"></span>    
+                  <span class="dot-fail" *ngIf="(event.eventStatus == 0)"></span>         
+                </th>
+                <th scope="row">
+                  <div *ngFor="let student of students">
+                    <span *ngIf="(student.studentId == event.studentId)">{{student.name}} {{student.surname}}</span>
+                  </div>                  
+                </th>
+                <th scope="row">
+                  <div *ngFor="let teacher of teachers">
+                    <span *ngIf="(teacher.teacherId == event.teacherId)">{{teacher.teacherName}} {{teacher.teacherSurname}}</span>
+                  </div>                  
+                </th>
+                <th scope="row">
+                  <div *ngFor="let lesson of lessons">
+                    <span *ngIf="(lesson.lessonId == event.lessonId)">{{lesson.lesson}}</span>
+                  </div>                  
+                </th>
+                <td>
+                  {{event.date | date:'dd-MM-yyyy'}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addEventModal" (click)="getEvent(event)">
+                    <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-8">
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="addEventModalLongTitle">Ders Ekle</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="datePicker">Tarih</label>
+            <div class="input-group">
+              <input type="date" id="input-date-ts" name="eventDate" class="form-control form-control-alternative"
+                (change)="onDateChange($event.target.value)" [(ngModel)]="event.date">
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputStudent">Öğrenci</label>
+            <select id="inputStudent" name="inputStudent" class="form-control" [(ngModel)]="event.studentId" (change)="getNormalEnrollments(event.studentId)">
+              <option [value]="undefined" style="display:none" selected>Öğrenci Seçiniz</option>
+              <option *ngFor="let student of students" [value]="student.studentId" [selected]="event.studentId == student.studentId">{{student.name}} {{student.surname}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputLesson">Ders</label>
+            <select id="inputLesson" name="inputLesson" class="form-control" [(ngModel)]="event.lessonId" [disabled]="!event.studentId || lessonsEvent.length <= 0 || teachersLes.length <= 0">
+              <option [value]="undefined" style="display:none" selected>Ders Seçiniz</option>
+              <option *ngFor="let lesson of lessonsEvent" [value]="lesson.lessonId" [selected]="event.lessonId == lesson.lessonId">{{lesson.lesson}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">                    
+            <label for="inputTeacher">Öğretmen</label>
+            <select id="inputTeacher" name="inputTeacher" class="form-control" [(ngModel)]="event.teacherId" [disabled]="!event.studentId || lessonsEvent.length <= 0 || teachersLes.length <= 0">
+              <option [value]="undefined" style="display:none" selected>Öğretmen Seçiniz</option>
+              <option *ngFor="let teacher of teachersLes" [value]="teacher.teacherId" [selected]="event.teacherId == teacher.teacherId">{{teacher.teacherName}} {{teacher.teacherSurname}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputStatus">Durumu</label>
+            <select class="form-control" id="inputStatus" [(ngModel)]="event.eventStatus" [disabled]="!event.studentId || lessonsEvent.length <= 0 || teachersLes.length <= 0">
+              <option [value]="false" [selected]="event.eventStatus == false">İptal</option>
+              <option [value]="true" [selected]="event.eventStatus == true">Aktif</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPrice">Öğretmene Fiyat Yansısın Mı?</label>
+            <select class="form-control" id="inputPrice" [(ngModel)]="event.priceToTeacher" [disabled]="!event.studentId || lessonsEvent.length <= 0 || teachersLes.length <= 0">
+              <option [value]="false" [selected]="event.priceToTeacher == false">Hayır</option>
+              <option [value]="true" [selected]="event.priceToTeacher == true">Evet</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Not</label>
+          <textarea rows="2" class="form-control form-control-alternative" placeholder="Alınmak istenen notlar" [(ngModel)]="event.description" 
+            id="description" name="description" [disabled]="!event.studentId || lessonsEvent.length <= 0 || teachersLes.length <= 0"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!--<div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="customSwitch1" [checked]="event.eventStatus" (change)="event.eventStatus = $event.target.checked">
+          <label class="custom-control-label" for="customSwitch1">Durumu</label>
+        </div>-->
+        <div class="col-3"></div>
+        <button id="closeEventModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onClosePreview()">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" (click)="addEvents()" [disabled]="event.studentId == null || event.teacherId == null || event.lessonId == null">Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-center" style="z-index: 5000;"></p-toast>

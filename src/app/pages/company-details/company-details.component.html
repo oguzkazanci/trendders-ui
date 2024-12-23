@@ -1,0 +1,151 @@
+<div class="header pb-5 pt-5 pt-md-8">    
+</div>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a (click)="handleUploadProfileImage()">
+                <img src="assets/img/theme/profil-pic.jpg">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          <div class="d-flex justify-content-between">
+            <label></label>
+          </div>
+          <div class="col text-right">
+              <a (click)="saveCompany()" class="btn btn-add">Kaydet</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+            <h6 class="heading-small text-muted mb-4">Firma Bilgileri</h6>
+            <div class="pl-lg-4">
+            <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-usertype">Kullanıcı Tipi *</label>
+                    <select id="input-usertype" class="form-control" [value]="company.companyType">
+                        <option *ngFor="let type of firmType" [value]="type.value" [selected]="company.companyType == type.value">{{type.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-brand">Firma Ünvanı *</label>
+                    <input type="text" id="input-brand" class="form-control form-control-alternative" placeholder="Trendders Akademi" [value]="company.companyTitle" (change)="company.companyTitle = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-brand">Sektör *</label>
+                    <select id="input-brand" class="form-control" [value]="company.companySector" (change)="company.companySector = $event.target.value">
+                      <option [value]="1" [selected]="company.companySector == 1">Eğitim</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-brand-name">Merkez Şube</label>
+                    <input type="text" id="input-brand-name" class="form-control form-control-alternative" placeholder="Merkez" [value]="company.branchName" (change)="company.branchName = $event.target.value">
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-tax-office">Vergi Dairesi</label>
+                    <input type="text" id="input-tax-office" class="form-control form-control-alternative" placeholder="Uşak" [value]="company.taxOffice" (change)="company.taxOffice = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-tax-no">Vergi Numarası</label>
+                    <input type="text" id="input-tax-no" class="form-control form-control-alternative" [value]="company.taxNo" (change)="company.taxNo = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-mersis-no">Mersis Numarası</label>
+                    <input type="text" id="input-mersis-no" class="form-control form-control-alternative" [value]="company.mersisNo" (change)="company.mersisNo = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-trade-no">Ticaret Sicil Numarası</label>
+                    <input type="text" id="input-trade-no" class="form-control form-control-alternative" [value]="company.tradeRegisterNo" (change)="company.tradeRegisterNo = $event.target.value">
+                  </div>
+                </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">İletişim Bilgisi</h6>
+            <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-phone">Sabit Telefon</label>
+                    <input id="input-phone" class="form-control form-control-alternative" type="text" [value]="company.landPhone" (change)="company.landPhone = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-phone-fax">Fax Numarası</label>
+                    <input id="input-phone-fax" class="form-control form-control-alternative" type="text" [value]="company.faxNumber" (change)="company.faxNumber = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-phone-gsm">GSM Numarası</label>
+                    <input id="input-phone-gsm" class="form-control form-control-alternative" type="text" [value]="company.gsmNumber" (change)="company.gsmNumber = $event.target.value">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email Adresi</label>
+                    <input id="input-email" class="form-control form-control-alternative" type="email" [value]="company.mailAddress" (change)="company.mailAddress = $event.target.value">
+                  </div>
+                </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Adres Bilgisi</h6>
+            <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-province">İl</label>
+                    <select id="input-province" class="form-control" [value]="company.provinceId" (change)="getDistrict()">
+                        <option style="display:none">İl Seçiniz</option>
+                        <option *ngFor="let province of provinceList" [value]="province.id" [selected]="company.provinceId == province.id">{{province.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-district">İlçe</label>
+                    <select id="input-district" class="form-control" [value]="company.districtId">
+                        <option style="display:none">İlçe Seçiniz</option>
+                        <option *ngFor="let district of districtList" [value]="district.id" [selected]="company.districtId == district.id">{{district.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Adres</label>
+                    <input id="input-address" class="form-control form-control-alternative" type="text" [value]="company.companyAddress" (change)="company.companyAddress = $event.target.value">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-center" style="z-index: 5000;"></p-toast>

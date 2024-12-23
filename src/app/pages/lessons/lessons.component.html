@@ -1,0 +1,505 @@
+<div class="header pb-5 pt-5 pt-md-8">    
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">  
+  <input class="radio" id="one" name="group" type="radio" checked>
+  <input class="radio" id="two" name="group" type="radio">
+  <input class="radio" id="three" name="group" type="radio">
+  <!--<input class="radio" id="four" name="group" type="radio">-->
+  <div class="tabs">
+    <label class="tab" id="one-tab" for="one">Kitap</label>
+    <label class="tab" id="two-tab" for="two">Kitap Al-Ver</label>
+    <label class="tab" id="three-tab" for="three">Konu</label>
+    <!--<label class="tab" id="four-tab" for="four">Yayınevi</label>-->
+    </div>
+  <div class="panels">
+    <!-- Books Panel -->
+    <div class="panel" id="one-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <h3 class="mb-0" style="text-align: left;">Kitaplar</h3>
+                </div>
+                <div class="col ml-auto">
+                  <a id="addBook" type="button" class="btn btn-add" data-toggle="modal" data-target="#addBookModal" (click)="onPreviewBookS()">Kitap Ekle</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="text-align: left;">Kitap</th>
+                    <th scope="col">Yayınevi</th>
+                    <th scope="col">Ders</th>
+                    <th scope="col">Sınıf</th>
+                    <th scope="col">Düzenle</th>
+                    <th scope="col">Sil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let book of books">
+                    <th scope="row" style="text-align: left;">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{book.bookName}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let publisher of publishers">
+                        <span *ngIf="(publisher.publisherId == book.publisherId)">{{publisher.publisherName}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let lesson of lessons">
+                        <span *ngIf="(lesson.lessonId == book.lessonId)">{{lesson.lesson}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <ng-container *ngFor="let grade of grades">
+                        <span *ngIf="grade.gradeId === book.gradeId">{{ grade.grade }}</span>
+                      </ng-container>
+                    </th>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addBookModal" (click)="getBook(book)">
+                            <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteScreen(0, book.bookId)">
+                            <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <!-- Given Books Panel -->
+    <div class="panel" id="two-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <select id="inputStudent" class="form-control" [(ngModel)]="student.studentId" (change)="getGivenBooksByStudentId()">
+                    <option [value]="undefined" style="display:none" selected>Öğrenci Seçiniz</option>
+                    <option *ngFor="let student of students" [value]="student.studentId">{{student.name}} {{student.surname}}</option>
+                  </select>
+                </div>
+                <div class="col ml-auto">
+                  <a id="addPublisher" type="button" class="btn btn-add" data-toggle="modal" data-target="#giveBookModal" 
+                    *ngIf="student.studentId" (click)="clear()">Kitap Ver</a>
+                </div>
+            </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Ders</th>
+                    <th scope="col">Yayınevi</th>
+                    <th scope="col">Kitap Adı</th>
+                    <th scope="col">Tipi</th>
+                    <th scope="col">Sil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let gbook of givenBooks">
+                    <th scope="row">
+                      <div *ngFor="let lesson of lessons">
+                        <span *ngIf="(gbook.lessonId == lesson.lessonId)">{{lesson.lesson}}</span>
+                      </div></th>
+                    <th scope="row">
+                      <div *ngFor="let publisher of publishers">
+                        <span *ngIf="(gbook.publisherId == publisher.publisherId)">{{publisher.publisherName}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let book of books">
+                        <span *ngIf="(gbook.bookId == book.bookId)">{{book.bookName}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let grade of grades">
+                        <span *ngIf="(gbook.gradeId == grade.gradeId)">{{grade.grade}}</span>
+                      </div>
+                    </th>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteScreen(3, gbook.givenBookId)">
+                            <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <!-- Subject Panel -->
+    <div class="panel" id="three-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <select id="inputLessons" class="form-control" [(ngModel)]="subjectRequest.lessonId" (change)="getSubjects()">
+                    <option [value]="undefined" style="display:none">Ders Seçiniz</option>
+                    <option *ngFor="let lesson of lessons" [value]="lesson.lessonId">{{lesson.lesson}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputGrades" class="form-control" [(ngModel)]="subjectRequest.gradeId" (change)="getSubjects()">
+                    <option [value]="undefined" style="display:none">Sınıf Seçiniz</option>
+                    <option *ngFor="let grade of grades" [value]="grade.gradeId">{{grade.grade}}</option>
+                  </select>
+                </div>
+                <div class="col ml-auto">
+                  <a id="addSubject" type="button" class="btn btn-add" data-toggle="modal" data-target="#addSubjectModal" (click)="onPreviewSubjectS()">Konu Ekle</a>
+                </div>
+            </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Sıralama</th>
+                    <th scope="col" style="max-width: 20px;">Sınıf</th>
+                    <th scope="col" style="text-align: left;">Konu</th>
+                    <th scope="col">Düzenle</th>
+                    <th scope="col">Sil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let subject of subjects; let i = index">
+                    <td>
+                      <button (click)="moveUp(i)" [disabled]="i === 0">⬆️</button>
+                      <button (click)="moveDown(i)" [disabled]="i === subjects.length - 1">⬇️</button>
+                    </td>
+                    <th scope="row">
+                      <ng-container *ngFor="let grade of grades">
+                        <span *ngIf="subject.gradeId === grade.gradeId">{{ grade.grade }}</span>
+                      </ng-container>
+                    </th>
+                    <th scope="row" style="text-align: left;">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{subject.subject}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addSubjectModal" (click)="getSubject(subject)">
+                            <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteScreen(1, subject.subjectId)">
+                            <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    <!-- Publisher Panel -->
+    <!-- <div class="panel" id="four-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <h3 class="mb-0" style="text-align: left;">Yayınevi</h3>
+                </div>
+                <div class="col-6"></div>
+                <div class="col ml-auto">
+                </div>
+                <div class="col ml-auto">
+                  <a id="addPublisher" type="button" class="btn btn-add" data-toggle="modal" data-target="#addPublisherModal" (click)="onPreviewPublisherS()">Yayınevi Ekle</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="text-align: left;">Yayınevi</th>
+                    <th scope="col">Düzenle</th>
+                    <th scope="col">Sil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let publisher of publishers">
+                    <th scope="row" style="text-align: left;">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{publisher.publisherName}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addPublisherModal" (click)="getPublisher(publisher)">
+                        <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                      </button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteScreen(2, publisher.publisherId)">
+                        <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div> -->
+  </div>   
+</div>
+
+<!-- Add Subject Modal Screen -->
+<div class="modal fade" id="addSubjectModal" tabindex="-1" role="dialog" aria-labelledby="addSubjectModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="addSubjectModalLongTitle">Konu Ekleme</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="background-color: #f7fafc;">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">          
+                  <label for="inputSubjectExamType">Sınıf *</label>
+                  <select id="inputSubjectExamType" class="form-control" [(ngModel)]="subject.gradeId" name="inputSubjectExamType">
+                    <option [value]="undefined" style="display: none;" selected>Sınıf Seçiniz</option>
+                    <option *ngFor="let grade of grades" [value]="grade.gradeId" [selected]="subject.gradeId == grade.gradeId">{{grade.grade}}</option>                        
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">         
+                  <label for="inputSubjectLesson">Ders *</label>
+                  <select id="inputSubjectLesson" class="form-control" [(ngModel)]="subject.lessonId" name="inputSubjectExamType">
+                    <option [value]="undefined" style="display: none;" selected>Ders Seçiniz</option>
+                    <option *ngFor="let lesson of lessons" [value]="lesson.lessonId" [selected]="subject.lessonId == lesson.lessonId">{{lesson.lesson}}</option>
+                  </select> 
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lesson">Konu *</label>
+                <input type="lesson" class="form-control" id="lesson" placeholder="Konuyu Giriniz" [(ngModel)]="subject.subject"
+                name="inputSubjectTitle">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="closeAddSubjectModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onClosePreviewSS()">Kapat</button>
+            <button class="btn btn-success btn-primary" [disabled]="!this.subject.subject" (click)="saveSubject()">
+              Ekle
+            </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Add Book Modal Screen -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="addBookModalLongTitle">Kitap Ekleme</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="background-color: #f7fafc;">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">          
+                  <label for="inputBookExamType">Tipi *</label>
+                  <select id="inputBookExamType" class="form-control" [(ngModel)]="book.gradeId" name="inputBookExamType">
+                    <option [value]="undefined" style="display:none" selected>Seçiniz</option>
+                    <option *ngFor="let grade of grades" [value]="grade.gradeId" [selected]="book.gradeId == grade.gradeId">{{grade.grade}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">         
+                  <label for="inputBookLesson">Ders *</label>
+                  <select id="inputBookLesson" class="form-control" [(ngModel)]="book.lessonId" name="inputBookExamType">
+                    <option [value]="undefined" style="display:none" selected>Ders Seçiniz</option>
+                    <option *ngFor="let lesson of lessons" [value]="lesson.lessonId" [selected]="book.lessonId == lesson.lessonId">{{lesson.lesson}}</option>
+                  </select> 
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">          
+                  <label for="inputBookPublisher">Yayınevi *</label>
+                  <select id="inputBookPublisher" class="form-control" [(ngModel)]="book.publisherId" name="inputBookExamType">
+                    <option [value]="undefined" style="display:none" selected>Yayınevi Seçiniz</option>
+                    <option *ngFor="let publisher of publishers" [value]="publisher.publisherId" [selected]="book.publisherId == publisher.publisherId">{{publisher.publisherName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <button class="btn btn-publisher" data-toggle="modal" data-target="#addPublisherModal" (click)="onPreviewPublisherS()">Yayınevi Ekle</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lesson">Kitap İsmi *</label>
+              <input type="lesson" class="form-control" id="lesson" placeholder="Kitap İsmini Giriniz" [value]="book.bookName" (keyup)="book.bookName = $event.target.value">
+            </div>       
+          </div>
+          <div class="modal-footer">
+            <button id="closeAddBookModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onClosePreviewBS()">Kapat</button>
+            <button type="button" class="btn btn-success btn-primary" [disabled]="!this.book.bookName" (click)="saveBook()">
+              Ekle
+            </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Add Publisher Modal Screen -->
+<div class="modal fade" id="addPublisherModal" tabindex="-1" role="dialog" aria-labelledby="addPublisherModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="addPublisherModalLongTitle">Yayınevi Ekleme</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="background-color: #f7fafc;">            
+            <div class="form-group">
+              <label for="publisher">Yayınevi *</label>
+              <input type="publisher" class="form-control" id="publisher" placeholder="Yayınevi İsmini Giriniz" [(ngModel)]="publisher.publisherName" name="PublisherName">
+            </div>     
+          </div>
+          <div class="modal-footer">
+            <button id="closeAddPublisherModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onClosePreviewPS()">Kapat</button>
+            <button type="button" class="btn btn-success btn-primary" [disabled]="!this.publisher.publisherName" (click)="savePublisher()">
+              Ekle
+            </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Give Book Modal Screen -->
+<div class="modal fade" id="giveBookModal" tabindex="-1" role="dialog" aria-labelledby="giveBookModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title" id="giveBookModalLongTitle">Kitap Verme</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" style="background-color: #f7fafc;">
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="inputTrackLesson">Ders</label>
+                  <select id="inputTrackLesson" class="form-control" [(ngModel)]="givenBook.lessonId" (change)="changeDisabled()" name="inputTrackLesson">
+                    <option [value]="undefined" style="display:none" selected>Ders Seçiniz</option>
+                    <option *ngFor="let lesson of lessons" [value]="lesson.lessonId" [selected]="givenBook.lessonId == lesson.lessonId">{{lesson.lesson}}</option>
+                  </select> 
+                </div>
+              </div>
+              <div class="col-3"></div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="inputTrackPublisher">Yayınevi *</label>
+                  <select id="inputTrackPublisher" class="form-control" [(ngModel)]="givenBook.publisherId" (change)="getBookByPublisherId()" [disabled]="lesDis != 1" name="inputTrackPublisher">
+                    <option [value]="undefined" style="display:none" selected>Yayınevi Seçiniz</option>
+                    <option *ngFor="let publisher of chnPublishers" [value]="publisher.publisherId" [selected]="givenBook.publisherId == publisher.publisherId">{{publisher.publisherName}}</option>
+                  </select> 
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">          
+                  <label for="inputTrackBook">Kitap İsmi *</label>
+                  <select id="inputTrackBook" class="form-control" [(ngModel)]="givenBook.bookId" [disabled]="lesDis != 1" name="inputTrackBook">
+                    <option [value]="undefined" style="display:none" selected>Kitap Seçiniz</option>
+                    <option *ngFor="let book of chnBooks" [value]="book.bookId" [selected]="givenBook.bookId == book.bookId">{{book.bookName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>       
+          </div>
+          <div class="modal-footer">
+            <button id="closeGiveBookModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+            <button type="button" class="btn btn-success btn-primary" [disabled]="this.givenBook.bookId == null" (click)="giveBookToStudent()">
+              Ver
+            </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Delete Modal Screen -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="deleteModalLongTitle">UYARI</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <a>Silmek istediğinize emin misiniz?</a>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6">
+            <button class="btn btn-success btn-danger" (click)="delete()">Sil</button>
+          </div>
+          <div class="form-group col-lg-6">
+            <a class="btn btn-success btn-default" class="btn btn-secondary btn-default" data-dismiss="modal" id="closeDeleteModal">İptal</a>
+          </div> 
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-center" style="z-index: 5000;"></p-toast>

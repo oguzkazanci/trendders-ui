@@ -1,0 +1,66 @@
+:host {
+    display: block;
+    text-align: center;
+}
+
+.header {
+    background: rgb(119,82,98);
+    background: radial-gradient(circle, rgba(119,82,98,1) 0%, rgba(5,6,80,1) 100%)
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: rgb(15, 218, 15);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-warning {
+    height: 25px;
+    width: 25px;
+    background-color: rgb(243, 160, 6);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-fail {
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.form-control-alternative {    
+    color: black;
+}
+
+.form-control {    
+    color: black;
+}
+
+.btn-warning {
+    color: #fff;
+    border-color: orange;
+    background-color: #fb9a40;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.btn-add {
+    color: white;
+    background-color: #429547; 
+    border-color: #429547;
+    position: absolute;
+    top: -20px;
+    right: 30px;
+    width: 140px;
+}
+
+.first-letter {
+    text-transform: capitalize;
+}
+
+.p-multiselect {
+    z-index: 1000;
+  }

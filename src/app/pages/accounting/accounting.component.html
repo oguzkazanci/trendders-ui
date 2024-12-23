@@ -1,0 +1,873 @@
+<div class="header pb-5 pt-5 pt-md-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-auto">
+          <div class="card card-stats mb-2 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Alacak</h5>
+                  <span class="h2 font-weight-bold mb-0">{{totalAmountRec}} ₺</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape text-white rounded-circle shadow" style="background-color: #4ad09b;">
+                    <i class="fas fa-receipt"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-1 mb-0 text-muted text-sm">
+                <span class="text-nowrap">Toplam Kalan Alacak</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="card card-stats mb-2 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Nakit</h5>
+                  <span class="h2 font-weight-bold mb-0">{{totalAmountCash}} ₺</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape text-white rounded-circle shadow" style="background-color: #c6d47e;">
+                    <i class="fas fa-money-bill-wave-alt"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-1 mb-0 text-muted text-sm">
+                <span class="text-nowrap">Toplam Nakit Satış</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="card card-stats mb-2 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Havale-EFT</h5>
+                  <span class="h2 font-weight-bold mb-0">{{totalAmountTra}} ₺</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape text-white rounded-circle shadow" style="background-color: #4750ad;">
+                    <i class="fas fa-exchange-alt"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-1 mb-0 text-muted text-sm">
+                <span class="text-nowrap">Toplam Havale-EFT Satış</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card card-stats mb-2 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Tüm Satış Toplamı</h5>
+                  <span class="h2 font-weight-bold mb-0">{{totalAmountInc}} ₺</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape text-white rounded-circle shadow" style="background-color: #c071bc;">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-1 mb-0 text-muted text-sm">
+                <span class="text-nowrap">Genel Satış Toplamı</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card card-stats mb-2 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Kasa Net</h5>
+                  <span class="h2 font-weight-bold mb-0">{{totalAmountExp}} ₺</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape text-white rounded-circle shadow" style="background-color: #e2aed5;">
+                    <i class="fas fa-calculator"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-1 mb-0 text-muted text-sm">
+                <span class="text-nowrap">Genel Net</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--4">
+  <input class="radio" id="one" name="group" type="radio" checked>
+  <input class="radio" id="two" name="group" type="radio">
+  <input class="radio" id="three" name="group" type="radio">
+  <div class="tabs">
+    <label class="tab" id="one-tab" for="one">Öğrenci</label>
+    <label class="tab" id="two-tab" for="two">Öğretmen</label>
+    <label class="tab" id="three-tab" for="three">Gider</label>
+    </div>
+  <div class="panels">
+    <div class="panel" id="one-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <select id="inputStudent" class="form-control" [value]="event.studentId" (change)="getEventsByStudentId()">
+                    <option style="display:none">Öğrenci Seçiniz</option>
+                    <option *ngFor="let student of students" [value]="student.studentId" [selected]="event.studentId == student.studentId">{{student.name}} {{student.surname}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputMonths" class="form-control" [value]="nowMonth">
+                    <option *ngFor="let month of months" [value]="month.value" [selected]="nowMonth==month.value">{{month.name}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputState" class="form-control">
+                    <option *ngFor="let state of paymentState" [value]="state.value" [selected]="selectState==state.value">{{state.name}}</option>
+                  </select>
+                </div>
+                <div class="col text-right">
+                  <button (click)="getEventsByStudentId()" class="btn btn-success btn-list" [disabled]="!event.studentId">Listele</button>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="width: 30px;">Durumu</th>
+                    <th scope="col">İşlem No</th>
+                    <th scope="col">Öğrenci</th>
+                    <th scope="col">Veli</th>
+                    <th scope="col">Öğretmen</th>
+                    <th scope="col">Ders</th>
+                    <th scope="col">Ders Tarihi</th>
+                    <th scope="col">Ders Ücreti</th>
+                    <th scope="col">Kalan Ücret</th>
+                    <th scope="col">Ödeme Tipi</th>
+                    <th scope="col">Ödeme</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let event of events">
+                    <th scope="row">
+                      <div *ngFor="let payment of payments">
+                        <span class="dot" *ngIf="(payment.paymentStatus == 1 && payment.eventId == event.eventId)"></span>    
+                        <span class="dot-warning" *ngIf="(payment.paymentStatus == 0 && payment.eventId == event.eventId)"></span> 
+                        <span class="dot-fail" *ngIf="(payment.paymentStatus == 2 && payment.eventId == event.eventId)"></span> 
+                      </div>        
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let payment of payments">
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.paymentId}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let student of students">
+                        <span *ngIf="(student.studentId == event.studentId)">{{student.name}} {{student.surname}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let student of students">
+                        <span *ngIf="(student.studentId == event.studentId)">{{student.parent}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let teacher of teachers">
+                        <span *ngIf="(teacher.teacherId == event.teacherId)">{{teacher.teacherName}} {{teacher.teacherSurname}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let lesson of lessons">
+                        <span *ngIf="(lesson.lessonId == event.lessonId)">{{lesson.lesson}}</span>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{event.date | date:'dd-MM-yyyy'}}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <th scope="row">
+                      <div *ngFor="let payment of payments"> 
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.paymentAmount}}</span>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div *ngFor="let payment of payments"> 
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.remainingAmount}}</span>
+                      </div>
+                    </th>
+                    <td>
+                      <div *ngFor="let payment of payments">
+                        <div *ngIf="(payment.eventId == event.eventId)">
+                          <div *ngFor="let method of paymentMethods">
+                            <span *ngIf="(payment.paymentMethodId == method.paymentMethodId)">{{method.paymentMethod}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let payment of payments"> 
+                        <button type="button" class="btn btn-primary" *ngIf="(payment.eventId == event.eventId)" data-toggle="modal" 
+                                data-target="#paymentStudentModal" (click)="toPaymentScreen(payment)">
+                          <span class="btn-inner--icon"><i class="fas fa-tag"></i></span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <div class="row">
+                <a>Toplam Ders Ücreti : {{totalStudentAmount}}</a>
+                <div class="col text-right">
+                  <button type="button" class="btn btn-pdf" id="pdfButton" style="visibility: hidden;" (click)="downloadPdf()">
+                    <span class="btn-inner--icon"><i class="far fa-file-pdf"></i></span>
+                  </button>
+                  <button type="button" class="btn btn-excel" id="excelButton" style="visibility: hidden;" (click)="downloadExcel()">
+                    <span class="btn-inner--icon"><i class="far fa-file-excel"></i></span>
+                  </button>
+                  <button class="btn btn-default btn-success" id="buttonAllPayment" data-toggle="modal" data-target="#paymentAllStudentModal"
+                          style="visibility: hidden;">Ödenmemişleri Al</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="two-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <select id="inputTeacher" class="form-control" [value]="event.teacherId" (change)="getEventsByTeacherId()">
+                    <option style="display:none">Öğretmen Seçiniz</option>
+                    <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">{{teacher.teacherName}} {{teacher.teacherSurname}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputMonthsTeacher" class="form-control" [value]="nowMonth">
+                    <option *ngFor="let month of months" [value]="month.value" [selected]="nowMonth==month.value">{{month.name}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputStateTeacher" class="form-control">
+                    <option *ngFor="let state of paymentState" [value]="state.value" [selected]="selectState==state.value">{{state.name}}</option>
+                  </select>
+                </div>
+                <div class="col text-right">
+                  <button (click)="getEventsByTeacherId()" class="btn btn-success btn-list" [disabled]="!event.teacherId">Listele</button>
+                </div>
+              </div>
+            </div>
+            <div id="tableTeacher" class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="width: 30px;">Durumu</th>
+                    <th scope="col">İşlem No</th>
+                    <th scope="col">Öğretmen</th>
+                    <th scope="col">Ders</th>
+                    <th scope="col">Ders Tarihi</th>
+                    <th scope="col">Öğrenci</th>
+                    <th scope="col">Ders Ücreti</th>
+                    <th scope="col">Kalan Ücret</th>
+                    <th scope="col">Ödeme Tipi</th>
+                    <th scope="col">Ödeme</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let event of eventsTeacher">
+                    <td scope="row">
+                      <div *ngFor="let payment of paymentsTeacher">
+                        <span class="dot" *ngIf="(payment.paymentStatus == 1 && payment.eventId == event.eventId)"></span>    
+                        <span class="dot-warning" *ngIf="(payment.paymentStatus == 0 && payment.eventId == event.eventId)"></span> 
+                        <span class="dot-fail" *ngIf="(payment.paymentStatus == 2 && payment.eventId == event.eventId)"></span> 
+                      </div>        
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let payment of paymentsTeacher">
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.paymentId}}</span>
+                      </div>                  
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let teacher of teachers">
+                        <span *ngIf="(teacher.teacherId == event.teacherId)">{{teacher.teacherName}} {{teacher.teacherSurname}}</span>
+                      </div>
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let lesson of lessons">
+                        <span *ngIf="(lesson.lessonId == event.lessonId)">{{lesson.lesson}}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{event.date | date:'dd-MM-yyyy'}}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let student of students">
+                        <span *ngIf="(student.studentId == event.studentId)">{{student.name}} {{student.surname}}</span>
+                      </div>                  
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let payment of paymentsTeacher"> 
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.paymentAmount}}</span>
+                      </div>
+                    </td>
+                    <td scope="row">
+                      <div *ngFor="let payment of paymentsTeacher"> 
+                        <span *ngIf="(payment.eventId == event.eventId)">{{payment.remainingAmount}}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let payment of paymentsTeacher">
+                        <div *ngIf="(payment.eventId == event.eventId)">
+                          <div *ngFor="let method of paymentMethods">
+                            <span *ngIf="(payment.paymentMethodId == method.paymentMethodId)">{{method.paymentMethod}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div *ngFor="let payment of paymentsTeacher">
+                        <button type="button" class="btn btn-primary" *ngIf="(payment.eventId == event.eventId)" data-toggle="modal" 
+                                data-target="#paymentTeacherModal" (click)="toPaymentScreen(payment)">
+                          <span class="btn-inner--icon"><i class="fas fa-tag"></i></span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <div class="row">
+                <div>Toplam Ders Ücreti : {{totalTeacherAmount}}</div>
+                <div class="col text-right">
+                  <button class="btn btn-default btn-success" id="buttonAllPaymentTeacher" data-toggle="modal" data-target="#paymentAllTeacherModal"
+                          style="visibility: hidden;">Ödenmemişleri Al</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="three-panel">
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <select id="inputMonthsExpense" class="form-control" [value]="nowMonth">
+                    <option *ngFor="let month of months" [value]="month.value" [selected]="nowMonth==month.value">{{month.name}}</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <select id="inputStateExpense" class="form-control">
+                    <option *ngFor="let state of paymentState" [value]="state.value" [selected]="selectState==state.value">{{state.name}}</option>
+                  </select>
+                </div>
+                <div class="col text-right">
+                  <a (click)="listExpense()" class="btn btn-success" style="background-color: #3f5180; border-color: #3f5180;">Listele</a>
+                </div>
+                <div class="col text-right">
+                  <a (click)="onPreviewImage()" class="btn btn-default btn-success" data-toggle="modal" data-target="#paymentExpenseModal">Gider</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="width: 30px;">Durumu</th>
+                    <th scope="col">Miktar</th>
+                    <th scope="col">Gider Açıklaması</th>
+                    <th scope="col">Tutar</th>
+                    <th scope="col">Tarihi</th>
+                    <th scope="col">Ödeme Tipi</th>
+                    <th scope="col">Düzenle</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="paymentsExpense && paymentsExpense.length > 0">
+                  <tr *ngFor="let pays of paymentsExpense">
+                    <th scope="row">
+                        <span class="dot" *ngIf="(pays.paymentStatus == 1)"></span>
+                        <span class="dot-warning" *ngIf="(pays.paymentStatus == 0)"></span>
+                        <span class="dot-fail" *ngIf="(pays.paymentStatus == 2)"></span>
+                    </th>
+                    <th scope="row">
+                      <span>{{pays.paymentQuantity}}</span>
+                    </th>
+                    <th scope="row">
+                      <span>{{pays.explanation}}</span>
+                    </th>
+                    <th scope="row">
+                      <span>{{pays.paymentAmount}} ₺</span>
+                    </th>
+                    <th scope="row">
+                      <span *ngIf="pays.paymentDate != 'null'">{{pays.paymentDate | date:'dd-MM-yyyy'}}</span>
+                    </th>
+                    <td>
+                      <div *ngFor="let method of paymentMethods">
+                        <span *ngIf="(method.paymentMethodId == pays.paymentMethodId)">{{method.paymentMethod}}</span>
+                      </div>
+                    </td>
+                    <td >
+                        <button type="button" class="btn btn-primary" *ngIf="pays.explanation != 'Öğretmen'" data-toggle="modal" 
+                                data-target="#paymentExpenseModal" (click)="toExpenseScreen(pays)">
+                          <span class="btn-inner--icon"><i class="fas fa-pen"></i></span>
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">               
+              <div class="row">
+                <a>Toplam Gider : {{totalExpenseAmount}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Student Modal Screen -->
+<div class="modal fade" id="paymentStudentModal" tabindex="-1" role="dialog" aria-labelledby="paymentStudentModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="paymentStudentModalLongTitle">Ödeme</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="row">
+          <div class="col-auto">
+            <label class="form-control-label" for="input-username">İşlem no : {{payment.paymentId}}</label>
+          </div>
+          <div class="col-auto">
+            <div *ngFor="let event of events">
+              <div *ngIf="(payment.eventId == event.eventId)"> 
+                <div *ngFor="let student of students">
+                  <label class="form-control-label" *ngIf="(student.studentId == event.studentId)">Öğrenci : {{student.name}} {{student.surname}}</label>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="col-auto">
+            <div *ngFor="let event of events">
+              <div *ngIf="(payment.eventId == event.eventId)">
+                <div *ngFor="let lesson of lessons">
+                  <label class="form-control-label" *ngIf="(lesson.lessonId == event.lessonId)">Ders : {{lesson.lesson}}</label>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="col-auto">
+            <div *ngFor="let event of events">
+              <div *ngIf="(payment.eventId == event.eventId)"> 
+                <div *ngFor="let teacher of teachers">
+                  <label class="form-control-label" *ngIf="(teacher.teacherId == event.teacherId)">Öğretmen : {{teacher.teacherName}} {{teacher.teacherSurname}}</label>
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="col-auto">
+            <div *ngFor="let event of events">
+              <div *ngIf="(payment.eventId == event.eventId)">
+                <label class="form-control-label">Ders Tarihi : {{event.date | date:'dd-MM-yyyy'}}</label>
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label">Toplam Tutar : {{payment.paymentAmount}} ₺</label>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label">Kalan Tutar : {{payment.remainingAmount}} ₺</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <div class="form-group">
+              <input type="radio" name="option" value="option1" [(ngModel)]="selectedOption" (ngModelChange)="changeRadio()"> Tamamını Al
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <input type="radio" name="option" value="option2" [(ngModel)]="selectedOption" (ngModelChange)="changeRadio()"> Belirlenen Tutarı Al
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-auto">
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <input type="text" id="input-amount" class="form-control form-control-alternative" [(ngModel)]="payment.amountReceived" 
+                    [disabled]="selectedOption === 'option1'">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">₺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label" for="inputPaymentMethod">Ödeme Yöntemi *</label>
+              <select id="inputPaymentMethod" class="form-control" [(ngModel)]="payment.paymentMethodId" name="PaymentMethod">
+                <option *ngFor="let method of paymentMethods" [value]="method.paymentMethodId" [selected]="method.paymentMethodId == payment.paymentMethodId">{{method.paymentMethod}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" *ngIf="payment.paymentStatus == 1" (click)="getRollbackPayment(0)">Ödeme Geri Al</button>
+        <button id="closePaymentStudentModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!payment.paymentMethodId" (click)="savePayment(0)">Onay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Teacher Modal Screen -->
+<div class="modal fade" id="paymentTeacherModal" tabindex="-1" role="dialog" aria-labelledby="paymentTeacherModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="paymentTeacherModalLongTitle">Ödeme</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="row">
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">İşlem no : {{payment.paymentId}}</label>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <div *ngFor="let event of eventsTeacher">
+                <div *ngIf="(payment.eventId == event.eventId)"> 
+                  <div *ngFor="let student of students">
+                    <label class="form-control-label" *ngIf="(student.studentId == event.studentId)">Öğrenci : {{student.name}} {{student.surname}}</label>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <div *ngFor="let event of eventsTeacher">
+                <div *ngIf="(payment.eventId == event.eventId)">
+                  <div *ngFor="let lesson of lessons">
+                    <label class="form-control-label" *ngIf="(lesson.lessonId == event.lessonId)">Ders : {{lesson.lesson}}</label>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <div *ngFor="let event of eventsTeacher">
+                <div *ngIf="(payment.eventId == event.eventId)"> 
+                  <div *ngFor="let teacher of teachers">
+                    <label class="form-control-label" *ngIf="(teacher.teacherId == event.teacherId)">Öğretmen : {{teacher.teacherName}} {{teacher.teacherSurname}}</label>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <div *ngFor="let event of eventsTeacher">
+                <div *ngIf="(payment.eventId == event.eventId)">
+                  <label class="form-control-label">Ders Tarihi : {{event.date | date:'dd-MM-yyyy'}}</label>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label">Ders Ücreti : {{payment.paymentAmount}} ₺</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label">Toplam Tutar : {{payment.paymentAmount}} ₺</label>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label">Kalan Tutar : {{payment.remainingAmount}} ₺</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <div class="form-group">
+              <input type="radio" name="optionTeacherAll" value="option3" [(ngModel)]="selectedOptionTeacher" (ngModelChange)="changeRadio()"> Tamamını Al
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <input type="radio" name="optionTeacherPartial" value="option4" [(ngModel)]="selectedOptionTeacher" (ngModelChange)="changeRadio()"> Belirlenen Tutarı Al
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-auto">
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <input type="text" id="input-amount" class="form-control form-control-alternative" [(ngModel)]="payment.amountReceived" 
+                    [disabled]="selectedOptionTeacher === 'option3'">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">₺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+          </div>
+          <div class="col-auto">
+            <div class="form-group">
+              <label class="form-control-label" for="inputPaymentMethod">Ödeme Yöntemi *</label>
+              <select id="inputPaymentMethod" class="form-control" [(ngModel)]="payment.paymentMethodId">
+                <option *ngFor="let method of paymentMethods" [value]="method.paymentMethodId" [selected]="method.paymentMethodId == payment.paymentMethodId">{{method.paymentMethod}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" *ngIf="payment.paymentStatus == 1" (click)="getRollbackPayment(1)">Ödeme Geri Al</button>
+        <button id="closePaymentTeacherModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!payment.paymentMethodId" (click)="savePayment(1)">Onay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment All Student Modal Screen -->
+<div class="modal fade" id="paymentAllStudentModal" tabindex="-1" role="dialog" aria-labelledby="paymentAllStudentModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="paymentAllStudentModalLongTitle">Toplu Ödeme</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="list-header">
+          <label>İşlem Numaraları :</label>
+        </div>
+        <ul>
+          <ng-container *ngFor="let payment1 of payments">
+            <li *ngIf="(payment1.paymentStatus == 0)">
+              <span>{{payment1.paymentId}}</span>
+            </li>
+          </ng-container>
+        </ul> 
+        <div class="form-group" style="float:right">
+          <label class="form-control-label" for="inputPaymentAllMethod">Ödeme Yöntemi</label>
+          <select id="inputPaymentAllMethod" class="form-control" [value]="payment.paymentMethodId" (change)="payment.paymentMethodId = $event.target.value">
+            <option style="display: none;"></option>
+            <option *ngFor="let method of paymentMethods" [value]="method.paymentMethodId" [selected]="method.paymentMethodId == payment.paymentMethodId">{{method.paymentMethod}}</option>
+          </select>
+        </div> 
+      </div>
+      <div class="modal-footer">
+        <button id="closePaymentAllStudentModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!payment.paymentMethodId" (click)="saveAllPayment()">Onay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment All Teacher Modal Screen -->
+<div class="modal fade" id="paymentAllTeacherModal" tabindex="-1" role="dialog" aria-labelledby="paymentAllTeacherModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="paymentAllTeacherModalLongTitle">Toplu Ödeme</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="list-header">
+          <label>İşlem Numaraları :</label>
+        </div>
+        <ul>
+          <ng-container *ngFor="let payment1 of paymentsTeacher">
+            <li *ngIf="(payment1.paymentStatus == 0)">
+              <span>{{payment1.paymentId}}</span>
+            </li>
+          </ng-container>
+        </ul> 
+        <div class="form-group" style="float:right">
+          <label class="form-control-label" for="inputPaymentAllTeacherMethod">Ödeme Yöntemi</label>
+          <select id="inputPaymentAllTeacherMethod" class="form-control" [value]="payment.paymentMethodId" (change)="payment.paymentMethodId = $event.target.value">
+            <option *ngFor="let method of paymentMethods" [value]="method.paymentMethodId" [selected]="method.paymentMethodId == payment.paymentMethodId">{{method.paymentMethod}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closePaymentAllTeacherModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!payment.paymentMethodId" (click)="saveAllTeacherPayment()">Onay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Expense Modal Screen -->
+<div class="modal fade" id="paymentExpenseModal" tabindex="-1" role="dialog" aria-labelledby="paymentExpenseModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="paymentExpenseModalLongTitle">Gider</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <p-confirmDialog class="p-dialog p-confirm-dialog" key="submitConfirm" [style]="{width: '330px'}"></p-confirmDialog>
+        <p-confirmDialog class="p-dialog p-confirm-dialog" key="showError" [style]="{width: '450px'}"></p-confirmDialog>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-expense">Açıklama</label>
+              <input type="text" id="input-expense" class="form-control form-control-alternative" placeholder="Gider Konusu" [(ngModel)]="expensePay.explanation" name="expExplanation">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-amount">Tutar</label>
+              <div class="input-group input-group-alternative mb-4">
+                <input type="text" id="input-amount" class="form-control form-control-alternative" [(ngModel)]="expensePay.paymentAmount" name="expPaymentAmount">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">₺</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-last-name">Tarih</label>
+              <input type="date" id="input-last-name" class="form-control form-control-alternative" [(ngModel)]="expensePay.paymentDate" name="expPaymentDate">
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="inputPaymentMethodExpense">Ödeme Yöntemi</label>
+              <select id="inputPaymentMethodExpense" class="form-control" [(ngModel)]="expensePay.paymentMethodId" name="expPaymentMethodId">
+                  <option *ngFor="let method of paymentMethods" [value]="method.paymentMethodId" [selected]="method.paymentMethodId == 0">{{method.paymentMethod}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="inputExpenseRepeat">Tekrarlı İşlem</label>
+              <select id="inputExpenseRepeat" class="form-control" [(ngModel)]="expensePay.repeatInterval" name="expRepeat" 
+                [disabled]="expenseDateCheck()">
+                <option [value]="0" [selected]="expensePay.repeatInterval == 0">YOK</option>
+                <option [value]="1" [selected]="expensePay.repeatInterval == 1">Her Ayın İlk Günü</option>
+                <option [value]="2" [selected]="expensePay.repeatInterval == 2">Her Ayın 15'i</option>
+                <option [value]="3" [selected]="expensePay.repeatInterval == 3">Her Ayın Sonu</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closePaymentExpenseModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!this.expensePay.explanation || !this.expensePay.paymentAmount || 
+                !this.expensePay.paymentQuantity || !this.expensePay.paymentDate" (click)="saveExpensePayment()"
+                *ngIf="expensePay.repeatInterval == 0">Onay</button>
+        <button type="button" class="btn btn-success btn-primary" [disabled]="!this.expensePay.explanation || !this.expensePay.paymentAmount || 
+                !this.expensePay.paymentQuantity || !this.expensePay.paymentDate"
+                *ngIf="expensePay.repeatInterval != 0"  data-toggle="modal" data-target="#approveModal">Onay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approve Modal Screen -->
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="approveModalLongTitle">UYARI</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: #f7fafc;">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <a>Gider Tekrarlı Olarak Eklenecek Onaylıyor Musunuz?</a>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-lg-6">
+            <button class="btn btn-success btn-danger" (click)="saveExpensePayment()">Onay</button>
+          </div>
+          <div class="form-group col-lg-6">
+            <a class="btn btn-success btn-default" class="btn btn-secondary btn-default" data-dismiss="modal" id="closeApproveModal">İptal</a>
+          </div> 
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast position="top-center" style="z-index: 5000;"></p-toast>

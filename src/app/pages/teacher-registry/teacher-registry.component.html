@@ -1,0 +1,222 @@
+<div class="header pb-5 pt-5 pt-md-8">    
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <!-- üst bar -->
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <h3 class="mb-0" style="text-align: left;">Öğretmen İşleri</h3>
+                        </div>
+                        <div class="col my-auto">
+                            <a id="addTeacher" type="button" class="btn btn-add" data-toggle="modal" data-target="#addTeacherModal" (click)="clear()">
+                                Öğrt. Ekle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- tablo -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="width: 30px;"></th>
+                                <th scope="col" style="text-align: left;">Öğretmen</th>
+                                <th scope="col">Verdiği Ders</th>
+                                <th scope="col">Cep Tel No</th>
+                                <th scope="col">Son Ders Tarihi</th>
+                                <th scope="col">Açıklama</th>
+                                <th scope="col">Düzenle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let teacherZ of teachers">
+                                <th scope="row">
+                                    <span class="dot" *ngIf="(teacherZ.teacherState == null || teacherZ.teacherState == 0)"></span>    
+                                    <span class="dot-warning" *ngIf="(teacherZ.teacherState == 1)"></span>  
+                                    <span class="dot-fail" *ngIf="(teacherZ.teacherState == 2)"></span>            
+                                </th>
+                                <th scope="row">
+                                    <div class="media align-items-center" style="text-align: left;">
+                                    <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                                    <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                                    </a> -->
+                                        <div class="media-body">
+                                            <span class="mb-0 text-sm">{{teacherZ.teacherName}} {{teacherZ.teacherSurname}}</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                     <div *ngFor="let les of teacherZ.lessons">
+                                        <span>{{les.lesson}}</span>
+                                    </div>
+                                </th>
+                                <td>
+                                    {{teacherZ.teacherPhoneNumber}}
+                                </td>
+                                <td>
+                                    <div *ngFor="let event of events">
+                                      <span *ngIf="teacherZ.teacherId == event.teacherId">{{event.date | date:'dd-MM-yyyy'}}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{teacherZ.explanation}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addTeacherModal" (click)="getTeacher(teacherZ)">
+                                        <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                                    </button>
+                                </td>
+                            </tr>               
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer py-4">
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div class="modal fade" id="addTeacherModal" tabindex="-1" role="dialog" aria-labelledby="addTeacherModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addTeacherModalLongTitle">Öğretmen</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #f7fafc;">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-first-name">Ad *</label>
+                            <input type="text" id="input-first-name" class="form-control form-control-alternative first-letter" placeholder="Mehmet" [(ngModel)]="teacher.teacherName" name="firstName">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-last-name">Soyad *</label>
+                            <input type="text" id="input-last-name" class="form-control form-control-alternative first-letter" placeholder="Er" [(ngModel)]="teacher.teacherSurname" name="teacherSurname">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-email">Email</label>
+                            <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="mehmet@example.com" [(ngModel)]="teacher.teacherMail" name="teacherMail">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-phone-number">Telefon Numarası</label>
+                            <input type="text" id="input-phone-number" class="form-control form-control-alternative" placeholder="555 055 55 55" [(ngModel)]="teacher.teacherPhoneNumber" name="teacherPhoneNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Adresi</label>
+                            <input id="input-address" class="form-control form-control-alternative" placeholder="Ev Adresi" type="text" [(ngModel)]="teacher.teacherAddress" name="teacherAddress">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-lesson">Verdiği Dersler</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" [value]="getSelectedLessons()" aria-label="Selected lessons" aria-describedby="basic-addon2" readonly>
+                                <div class="input-group-append">
+                                <button class="btn btn-secondary btn-default" type="button" data-toggle="modal" data-target="#addLessonModal">Ders Seçiniz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-state">Durumu</label>
+                            <select id="input-state" class="form-control" [(ngModel)]="teacher.teacherState" name="teacherState">
+                                <option [value]="0" [selected]="teacher.teacherState==0" name="teacherState-0">Aktif</option>
+                                <option [value]="1" [selected]="teacher.teacherState==1" name="teacherState-1">İptal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-worktype">Çalışma Tipi</label>
+                            <select id="input-worktype" class="form-control" [(ngModel)]="teacher.workType" name="worktype">
+                                <option [value]="0" [selected]="teacher.workType==0" name="worktype-0">Özel Ders</option>
+                                <option [value]="1" [selected]="teacher.workType==1" name="worktype-1">Sabit</option>
+                                <option [value]="2" [selected]="teacher.workType==2" name="worktype-2">Hepsi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" *ngIf="teacher.workType == 0 || teacher.workType == 2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-price">Ders Ücreti</label>
+                            <input type="text" inputmode="numeric" pattern="\d*" id="input-price" class="form-control form-control-alternative" placeholder="500" [(ngModel)]="teacher.teacherLesPrice" name="lesPrice">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" *ngIf="teacher.workType == 1 || teacher.workType == 2">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-basefee">Aylık Sabit</label>
+                            <input type="text" inputmode="numeric" pattern="\d*" id="input-basefee" class="form-control form-control-alternative" placeholder="500" [(ngModel)]="teacher.teacherBaseFee" name="baseFee">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea rows="2"name="explanation" id="input-explanation" class="form-control form-control-alternative" placeholder="Alınmak istenen notlar" [(ngModel)]="teacher.explanation"></textarea>
+                </div>        
+            </div>
+            <div class="modal-footer">
+                <button id="closeAddTeacherModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="clear()">Kapat</button>
+                <button type="button" class="btn btn-success btn-primary" [disabled]="!this.teacher.teacherName || !this.teacher.teacherSurname" 
+                    (click)="saveTeacher()" name="saveButton">
+                    Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addLessonModalLongTitle">Dersler</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #f7fafc;">
+                <div class="row">
+                    <div class="col-lg-4" *ngFor="let lesson of selectedLessons">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox mb-3">
+                            <input class="custom-control-input" id="customCheck{{lesson.lessonId}}" type="checkbox"
+                                    [(ngModel)]="lesson.selected">
+                            <label class="custom-control-label" for="customCheck{{lesson.lessonId}}">{{lesson.lesson}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>       
+            </div>
+            <div class="modal-footer">
+                <button id="closeAddLessonModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal">Seçiniz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-toast position="top-center" style="z-index: 5000;"></p-toast>
