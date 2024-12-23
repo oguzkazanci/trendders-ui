@@ -283,7 +283,7 @@ export class AccountingComponent implements OnInit {
         }
         document.getElementById("closePaymentTeacherModal").click();
       }
-      this.getTotalAmountOfReceivable();
+      //this.getTotalAmountOfReceivable();
       this.showSuccess();
     });
   }
@@ -338,7 +338,7 @@ export class AccountingComponent implements OnInit {
   }
 
   getStart(): void {
-    this.getTotalAmountOfReceivable();
+    //this.getTotalAmountOfReceivable();
     this.getStudents();
     this.getTeachers();
     this.paymentMethods = this.sharedService.paymentMethods;

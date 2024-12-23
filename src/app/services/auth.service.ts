@@ -11,8 +11,10 @@ export class AuthService {
   private userFullNameKey: string = 'userFullName';
   private userRoleKey: string = 'rol';
   private userCompanyKey: string = 'company';
-  public baseUrl: string = "http://localhost:5000";
+  //public baseUrl: string = "http://localhost:5000";
   //public baseUrl: string = "https://service.trendders.com";
+  public baseUrl: string = "https://ozitre.onrender.com";
+  
 
   private token: string | null = null;
   private refreshToken: string | null = null;
