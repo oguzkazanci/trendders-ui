@@ -88,6 +88,7 @@ export class StuRegistryComponent implements OnInit {
 
   saveStudent(): void {
     if (!this.student.name || !this.student.surname || this.student.regState == null) { return; }
+    this.student.seasonId = this.sharedService.getSeasonId();
     this.studentsService.saveStudent(this.student).subscribe(student1 => {
       this.students.push(student1);
       window.location.href='#/students'

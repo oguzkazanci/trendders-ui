@@ -14,4 +14,5 @@ export class Teachers {
     teacherLesPrice: number;
     teacherBaseFee: number;
     explanation: string;
+    seasonId: string;
 }

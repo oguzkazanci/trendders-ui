@@ -53,6 +53,7 @@ export class TeacherRegistryComponent implements OnInit {
       }
     });
     this.teacher.lessons = slcLesList;
+    this.teacher.seasonId = this.sharedService.getSeasonId();
     if (!this.teacher.username && !this.teacher.teacherName && !this.teacher.teacherSurname) { return; }
     this.teacherService.saveTeacher(this.teacher).subscribe(teacher1 => {
       document.getElementById("closeAddTeacherModal").click();

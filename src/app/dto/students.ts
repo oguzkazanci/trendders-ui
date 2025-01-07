@@ -19,4 +19,5 @@ export class Students {
     startMonth: number;
     installment: number;
     explanation: string;
+    seasonId: string;
 }
