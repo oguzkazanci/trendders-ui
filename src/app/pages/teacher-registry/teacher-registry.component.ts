@@ -66,8 +66,8 @@ export class TeacherRegistryComponent implements OnInit {
     this.teacherService.getTeachers().subscribe(x => {
       this.teachers = x;
       this.teachers.forEach((value,index)=>{
-        if (value.teacherState == 0)
-          this.getLastEvent(value.teacherId);
+        //if (value.teacherState == 0)
+          //this.getLastEvent(value.teacherId);
       });
     })
   }

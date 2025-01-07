@@ -307,6 +307,7 @@ export class AccountingComponent implements OnInit {
     var tempMonth: number = +((document.getElementById("inputMonthsExpense")as HTMLInputElement).value);
     var expenseRequest = new ExpenseRequest;
     expenseRequest.companyId = this.sharedService.getCompanyId();
+    expenseRequest.seasonId = this.sharedService.getSeasonId();
     expenseRequest.month = tempMonth;
     expenseRequest.paymentStatus = paymentStatus;
     expenseRequest.paymentType = paymentType;
@@ -327,6 +328,7 @@ export class AccountingComponent implements OnInit {
     expenseRequest.month = tempMonth;
     expenseRequest.paymentStatus = paymentStatus;
     expenseRequest.paymentType = 2;
+    expenseRequest.seasonId = this.sharedService.getSeasonId();
     this.paymentService.getPaymentExpenses(expenseRequest).subscribe(exp => {
       if (exp.length > 0) {
         this.paymentsExpense.push(...exp);

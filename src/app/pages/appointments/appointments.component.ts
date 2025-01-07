@@ -113,7 +113,7 @@ export class AppointmentsComponent implements OnInit {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay' // user can switch between the two
+      right: 'dayGridMonth' // user can switch between the two    ,timeGridWeek,timeGridDay
     },
     events: [
       this.events2
@@ -135,9 +135,16 @@ export class AppointmentsComponent implements OnInit {
       });
       this.getStudents();
       this.getTeachers();
-      this.fromDate = calendar.getNext(calendar.getToday(), 'd', -15);
-      this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-    }
+      const today = this.calendar.getToday();
+
+    this.fromDate = this.calendar.getPrev(today, 'd', today.day - 1);
+    this.toDate = this.getLastDayOfMonth(this.fromDate);
+  }
+
+  private getLastDayOfMonth(date: NgbDate): NgbDate {
+    const nextMonth = this.calendar.getNext(date, 'm', 1);
+    return this.calendar.getPrev(nextMonth, 'd', 1);
+  }
 
   ngOnInit(): void {
     this.getEvents();

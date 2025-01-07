@@ -45,12 +45,12 @@ export class StudentsService {
   }
 
   getStudents(): Observable<any> {
-    const url = `${this.studentsUrl}/${this.sharedService.getCompanyId()}`;
+    const url = `${this.studentsUrl}/${this.sharedService.getCompanyId()}/${this.sharedService.getSeasonId()}`;
     return this.httpClient.get<Students[]>(url, this.getHttpOptions());
   }
 
   getStudentsByRegState(state: number): Observable<any> {
-    const url = `${this.studentsUrl}/state/${state}/${this.sharedService.getCompanyId()}`;
+    const url = `${this.studentsUrl}/state/${state}/${this.sharedService.getCompanyId()}/${this.sharedService.getSeasonId()}`;
     return this.httpClient.get<Students[]>(url, this.getHttpOptions());
   }
 

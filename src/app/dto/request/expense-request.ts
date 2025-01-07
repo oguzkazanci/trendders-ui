@@ -3,4 +3,5 @@ export class ExpenseRequest {
     paymentType: number;
     month: number;
     companyId: string;
+    seasonId: string;
 }

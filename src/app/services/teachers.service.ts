@@ -26,7 +26,7 @@ export class TeachersService {
   }
 
   getTeachers(): Observable<any> {
-    const url = `${this.teachersUrl}/${this.sharedService.getCompanyId()}`
+    const url = `${this.teachersUrl}/${this.sharedService.getCompanyId()}/${this.sharedService.getSeasonId()}`
     return this.httpClient.get<Teachers[]>(url, this.getHttpOptions());
   }
 

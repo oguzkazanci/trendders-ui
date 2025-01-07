@@ -89,12 +89,12 @@ export class PaymentService {
   }
 
   downloadPDF(studentId: number, month: number) {
-    const url = `${this.paymentUrl}/getPaymentPDF/${studentId}?month=`+ month;
+    const url = `${this.paymentUrl}/getPaymentPDF/${this.sharedService.getSeasonId()}/${studentId}?month=`+ month;
     return this.httpClient.get(url, this.getHttpOptionsForPdf());
   }
   
   downloadExcel(studentId: number, month: number) {
-    const url = `${this.paymentUrl}/getPaymentExcel/${studentId}?month=`+ month;
+    const url = `${this.paymentUrl}/getPaymentExcel/${this.sharedService.getSeasonId()}/${studentId}?month=`+ month;
     return this.httpClient.get(url, this.getHttpOptionsForExcel());
   }
 }

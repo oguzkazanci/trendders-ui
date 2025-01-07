@@ -53,6 +53,33 @@ export class SidebarComponent implements OnInit {
   public companies: any[] = [];
   public isCollapsed = true;
   selectedCompany: string;
+  selectedSeason: number;
+  public seasons: any[] = [
+    {
+      seasonId: 0,
+      startDate: '2024-08-01T00:00:00.000Z',
+      endDate: '2025-07-31T23:59:59.000Z',
+      description: '2024-2025',
+    },
+    {
+      seasonId: 1,
+      startDate: '2025-08-01T00:00:00.000Z',
+      endDate: '2026-07-31T23:59:59.000Z',
+      description: '2025-2026',
+    },
+    {
+      seasonId: 2,
+      startDate: '2026-08-01T00:00:00.000Z',
+      endDate: '2027-07-31T23:59:59.000Z',
+      description: '2026-2027',
+    },
+    {
+      seasonId: 3,
+      startDate: '2027-08-01T00:00:00.000Z',
+      endDate: '2028-07-31T23:59:59.000Z',
+      description: '2027-2028',
+    },
+  ];
 
   constructor(private router: Router, private authService: AuthService, private sharedService: SharedService,
     private apiService: ApiService) {
@@ -78,9 +105,22 @@ export class SidebarComponent implements OnInit {
       }
     });
 
+    this.seasons.forEach((season) => {
+      const today = new Date();
+      if (today >= new Date(season.startDate) && today <= new Date(season.endDate)) {
+        this.selectedSeason = season.seasonId;
+        this.sharedService.setSeasonId(this.selectedSeason.toString());
+      }
+    });
+    
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+  }
+  
+  seasonChange() {
+    this.sharedService.setSeasonId(this.selectedSeason.toString());
+    console.log(this.sharedService.getSeasonId());
   }
 
   logout() {

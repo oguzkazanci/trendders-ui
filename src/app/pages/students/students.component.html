@@ -26,7 +26,7 @@
                   <th scope="col" style="text-align: left;">Öğrenci</th>
                   <th scope="col">Öğr. Cep Tel.</th>
                   <th scope="col">Sınıf</th>
-                  <th scope="col">Son Ders Tarihi</th>
+                  <!--<th scope="col">Son Ders Tarihi</th>-->
                   <th scope="col">Veli</th>
                   <th scope="col" *ngIf="userRole == 'ADMIN'">Veli Cep Tel.</th>
                   <th scope="col" *ngIf="userRole == 'ADMIN'">Kayıt Türü</th>
@@ -60,11 +60,11 @@
                       <span *ngIf="(grade.gradeId == student.gradeId)">{{grade.grade}}</span>
                     </div>                  
                   </th>
-                  <td>
+                  <!--<td>
                     <div *ngFor="let event of events">
                       <span *ngIf="student.studentId == event.studentId">{{event.date | date:'dd-MM-yyyy'}}</span>
                     </div>
-                  </td>
+                  </td>-->
                   <td>
                     {{student.parent}}
                   </td>

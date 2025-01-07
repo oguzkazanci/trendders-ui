@@ -126,6 +126,11 @@
           <option *ngFor="let comp of companies" [value]="comp.companyId" [selected]="selectedCompany == comp.companyId">{{comp.companyName}}</option>
         </select>
       </div>
+      <div class="navbar-nav form-group">
+        <select id="input-season" class="nav-item form-control" style="width: 90%" [(ngModel)]="selectedSeason" (change)="seasonChange()">
+          <option *ngFor="let season of seasons" [value]="season.seasonId" [selected]="selectedSeason == season.seasonId">{{season.description}}</option>
+        </select>
+      </div>
     </div>
   </div>
 </nav>

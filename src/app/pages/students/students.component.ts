@@ -45,8 +45,8 @@ export class StudentsComponent implements OnInit {
     this.studentsService.getStudents().subscribe(x => {
       this.students = x;
       this.students.forEach((value,index)=>{
-        if (value.regState == 0)
-          this.getLastEvent(value.studentId);
+        //if (value.regState == 0)
+          //this.getLastEvent(value.studentId);
     });
     })
   }  

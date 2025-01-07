@@ -12,6 +12,10 @@ export class SharedService {
 
   private companyId: string | null = null;
 
+  private seasonKey: string = 'selectedSeason';
+
+  private seasonId: string | null = null;
+
   studentID: number;
 
   constructor() { }
@@ -23,6 +27,15 @@ export class SharedService {
   setCompanyId(companyId: string) {
     this.companyId = companyId;
     localStorage.setItem(this.companyKey, companyId);
+  }
+
+  getSeasonId(): string | null {
+    return this.seasonId || localStorage.getItem(this.seasonKey);
+  }
+
+  setSeasonId(seasonId: string) {
+    this.seasonId = seasonId;
+    localStorage.setItem(this.seasonKey, seasonId);
   }
 
   setStudentID(studentIDValue: number) {

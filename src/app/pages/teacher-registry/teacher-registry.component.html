@@ -28,7 +28,7 @@
                                 <th scope="col" style="text-align: left;">Öğretmen</th>
                                 <th scope="col">Verdiği Ders</th>
                                 <th scope="col">Cep Tel No</th>
-                                <th scope="col">Son Ders Tarihi</th>
+                                <!--<th scope="col">Son Ders Tarihi</th>-->
                                 <th scope="col">Açıklama</th>
                                 <th scope="col">Düzenle</th>
                             </tr>
@@ -58,11 +58,11 @@
                                 <td>
                                     {{teacherZ.teacherPhoneNumber}}
                                 </td>
-                                <td>
+                                <!--<td>
                                     <div *ngFor="let event of events">
                                       <span *ngIf="teacherZ.teacherId == event.teacherId">{{event.date | date:'dd-MM-yyyy'}}</span>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     {{teacherZ.explanation}}
                                 </td>
