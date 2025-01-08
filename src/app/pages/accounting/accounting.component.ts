@@ -33,9 +33,9 @@ export class AccountingComponent implements OnInit {
   events: Events[] = [];
   eventsWithPayments: EventWithPayment[] = [];
   eventsTeacher: Events[] = [];
-  months: any = [{value: 0, name: "Ocak"},{value: 1, name: "Şubat"},{value: 2, name: "Mart"},{value: 3, name: "Nisan"},{value: 4, name: "Mayıs"},
-  {value: 5, name: "Haziran"},{value: 6, name: "Temmuz"},{value: 7, name: "Ağustos"},{value: 8, name: "Eylül"},{value: 9, name: "Ekim"},
-  {value: 10, name: "Kasım"},{value: 11, name: "Aralık"}];
+  months: any = [{value: 7, name: "Ağustos"},{value: 8, name: "Eylül"},{value: 9, name: "Ekim"},
+  {value: 10, name: "Kasım"},{value: 11, name: "Aralık"},{value: 0, name: "Ocak"},{value: 1, name: "Şubat"},{value: 2, name: "Mart"},{value: 3, name: "Nisan"},{value: 4, name: "Mayıs"},
+  {value: 5, name: "Haziran"},{value: 6, name: "Temmuz"},];
   paymentState: any = [{value: 0, name: "Ödenmemiş"}, {value: 1, name: "Ödenen"}, {value:3, name: "Tümü"}];
   selectState: number = 3;
   nowMonth: number;
