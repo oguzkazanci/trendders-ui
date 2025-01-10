@@ -51,6 +51,7 @@ export class AccountingComponent implements OnInit {
   selectedOption: string = 'option1';
   selectedOptionTeacher: string = 'option3';
   inputValue: string = '';
+  loading: boolean = false;
   
   constructor(private studentsService: StudentsService, private eventsService: EventsService,
     private teachersService: TeachersService, private sharedService: SharedService,
@@ -64,9 +65,15 @@ export class AccountingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sharedService.lessons.forEach(value => {
+      if (value.bookType == 1) {
+        this.lessons.push(value);
+      }
+    });
   }
 
   getEventsByStudentId() {
+    this.loading = true;
     this.payments = [];
     this.events = [];
     this.totalStudentAmount = 0;
@@ -82,6 +89,7 @@ export class AccountingComponent implements OnInit {
         this.totalStudentAmount = this.totalStudentAmount + currentValue.payment.paymentAmount;
         this.controlButtonAllPayment();
       })
+      this.loading = false;
     });
   }
 
@@ -91,6 +99,7 @@ export class AccountingComponent implements OnInit {
     var tempTeacherId: number = +((document.getElementById("inputTeacher")as HTMLInputElement).value);
     var tempMonth: number = +((document.getElementById("inputMonthsTeacher")as HTMLInputElement).value);
     var tempState: number = +((document.getElementById("inputStateTeacher")as HTMLInputElement).value);
+    this.loading = true;
     this.event.teacherId = tempTeacherId;
     this.eventsService.getEventsByTeacherId(tempTeacherId, tempMonth).subscribe(x => {
       this.eventsTeacher = x;
@@ -115,6 +124,7 @@ export class AccountingComponent implements OnInit {
             });
         }
       })
+      this.loading = false;
     });
   }
 
@@ -328,6 +338,7 @@ export class AccountingComponent implements OnInit {
     expenseRequest.month = tempMonth;
     expenseRequest.paymentStatus = paymentStatus;
     expenseRequest.paymentType = 2;
+    this.loading = true;
     expenseRequest.seasonId = this.sharedService.getSeasonId();
     this.paymentService.getPaymentExpenses(expenseRequest).subscribe(exp => {
       if (exp.length > 0) {
@@ -336,6 +347,7 @@ export class AccountingComponent implements OnInit {
           this.totalExpenseAmount = this.totalExpenseAmount + x.paymentAmount;
         });
       }
+      this.loading = false;
     });
   }
 
@@ -344,11 +356,6 @@ export class AccountingComponent implements OnInit {
     this.getStudents();
     this.getTeachers();
     this.paymentMethods = this.sharedService.paymentMethods;
-    this.sharedService.lessons.forEach(value => {
-      if (value.bookType == 1) {
-        this.lessons.push(value);
-      }
-    });
   }
 
   controlButtonAllPayment(): void {
@@ -473,4 +480,10 @@ export class AccountingComponent implements OnInit {
     this.messageService.add({severity:'success', summary: 'Başarılı', detail: 'Başarıyla Kaydedildi!'});
   }
 
+  checkStatus(variable: any): boolean {
+    if (variable != null && !this.loading) {
+      return false;
+    } 
+    return true;
+  }
 }

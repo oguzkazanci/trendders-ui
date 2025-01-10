@@ -143,7 +143,7 @@
                   </select>
                 </div>
                 <div class="col text-right">
-                  <button (click)="getEventsByStudentId()" class="btn btn-success btn-list" [disabled]="!event.studentId">Listele</button>
+                  <button (click)="getEventsByStudentId()" class="btn btn-success btn-list" [disabled]="checkStatus(event.studentId)">Listele</button>
                 </div>
               </div>
             </div>
@@ -165,6 +165,11 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="loading">
+                    <td colspan="3" class="loading">
+                      <div class="spinner"></div>
+                    </td>
+                  </tr>
                   <tr *ngFor="let event of events">
                     <th scope="row">
                       <div *ngFor="let payment of payments">
@@ -278,7 +283,7 @@
                   </select>
                 </div>
                 <div class="col text-right">
-                  <button (click)="getEventsByTeacherId()" class="btn btn-success btn-list" [disabled]="!event.teacherId">Listele</button>
+                  <button (click)="getEventsByTeacherId()" class="btn btn-success btn-list" [disabled]="checkStatus(event.teacherId)">Listele</button>
                 </div>
               </div>
             </div>
@@ -299,6 +304,11 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="loading">
+                    <td colspan="3" class="loading">
+                      <div class="spinner"></div>
+                    </td>
+                  </tr>
                   <tr *ngFor="let event of eventsTeacher">
                     <td scope="row">
                       <div *ngFor="let payment of paymentsTeacher">
@@ -395,7 +405,8 @@
                   </select>
                 </div>
                 <div class="col text-right">
-                  <a (click)="listExpense()" class="btn btn-success" style="background-color: #3f5180; border-color: #3f5180;">Listele</a>
+                  <button (click)="listExpense()" class="btn btn-success" style="background-color: #3f5180; border-color: #3f5180;"
+                   [disabled]="loading">Listele</button>
                 </div>
                 <div class="col text-right">
                   <a (click)="onPreviewImage()" class="btn btn-default btn-success" data-toggle="modal" data-target="#paymentExpenseModal">Gider</a>
@@ -416,6 +427,11 @@
                   </tr>
                 </thead>
                 <tbody *ngIf="paymentsExpense && paymentsExpense.length > 0">
+                  <tr *ngIf="loading">
+                    <td colspan="3" class="loading">
+                      <div class="spinner"></div>
+                    </td>
+                  </tr>
                   <tr *ngFor="let pays of paymentsExpense">
                     <th scope="row">
                         <span class="dot" *ngIf="(pays.paymentStatus == 1)"></span>
