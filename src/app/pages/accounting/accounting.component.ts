@@ -95,12 +95,13 @@ export class AccountingComponent implements OnInit {
   }
 
   getEventsByTeacherId() {
+    this.loading = true;
     this.paymentsTeacher = [];
+    this.eventsTeacher = [];
     this.totalTeacherAmount = 0;
     var tempTeacherId: number = +((document.getElementById("inputTeacher")as HTMLInputElement).value);
     var tempMonth: number = +((document.getElementById("inputMonthsTeacher")as HTMLInputElement).value);
     var tempState: number = +((document.getElementById("inputStateTeacher")as HTMLInputElement).value);
-    this.loading = true;
     this.event.teacherId = tempTeacherId;
     /*this.eventsService.getEventsByTeacherId(tempTeacherId, tempMonth).subscribe(x => {
       this.eventsTeacher = x;
