@@ -32,6 +32,7 @@ export class AccountingComponent implements OnInit {
   expensePay: Payment;
   events: Events[] = [];
   eventsWithPayments: EventWithPayment[] = [];
+  eventsTeacherWithPayments: EventWithPayment[] = [];
   eventsTeacher: Events[] = [];
   months: any = [{value: 7, name: "Ağustos"},{value: 8, name: "Eylül"},{value: 9, name: "Ekim"},
   {value: 10, name: "Kasım"},{value: 11, name: "Aralık"},{value: 0, name: "Ocak"},{value: 1, name: "Şubat"},{value: 2, name: "Mart"},{value: 3, name: "Nisan"},{value: 4, name: "Mayıs"},
@@ -101,7 +102,7 @@ export class AccountingComponent implements OnInit {
     var tempState: number = +((document.getElementById("inputStateTeacher")as HTMLInputElement).value);
     this.loading = true;
     this.event.teacherId = tempTeacherId;
-    this.eventsService.getEventsByTeacherId(tempTeacherId, tempMonth).subscribe(x => {
+    /*this.eventsService.getEventsByTeacherId(tempTeacherId, tempMonth).subscribe(x => {
       this.eventsTeacher = x;
       this.eventsTeacher.forEach((currentValue, index) => {
         if(currentValue.eventId) {
@@ -123,6 +124,16 @@ export class AccountingComponent implements OnInit {
               }
             });
         }
+      })
+      this.loading = false;
+    });*/
+    this.eventsService.getEventsByTeacherId(tempTeacherId, tempMonth).subscribe(x => {
+      this.eventsWithPayments = x;
+      this.eventsWithPayments.forEach((currentValue, index) => {
+        this.eventsTeacher.push(currentValue.event);
+        this.paymentsTeacher.push(currentValue.payment);
+        this.totalTeacherAmount = this.totalTeacherAmount + currentValue.payment.paymentAmount;
+        this.controlButtonAllPaymentTeacher();
       })
       this.loading = false;
     });

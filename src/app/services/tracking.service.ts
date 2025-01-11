@@ -34,8 +34,8 @@ export class TrackingService {
     return this.httpClient.get<GivenBooks[]>(url, this.getHttpOptions());
   }
 
-  getGivenBooksByStudentIdAndLessonId(studentId: number, lessonId: number): Observable<any> {
-    const url = `${this.givenBooksUrl}/getByStudentIdAndLessonId/${studentId}/${lessonId}`;
+  getGivenBook(studentId: number, lessonId: number, gradeId: string): Observable<any> {
+    const url = `${this.givenBooksUrl}/getGivenBook/${studentId}/${lessonId}/${gradeId}`;
     return this.httpClient.get<GivenBooks[]>(url, this.getHttpOptions());
   }
 

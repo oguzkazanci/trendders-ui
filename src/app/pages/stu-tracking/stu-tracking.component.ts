@@ -229,7 +229,7 @@ export class StuTrackingComponent implements OnInit {
     this.subjectsForTrack =  [];
     this.bookProgresses = [];
     this.givenBooks = [];
-    this.trackingService.getGivenBooksByStudentIdAndLessonId(this.student.studentId, this.selectedLesson).subscribe(x => {
+    this.trackingService.getGivenBook(this.student.studentId, this.selectedLesson, gradeId).subscribe(x => {
       this.givenBooks = x;
       this.subjectService.getSubjectByLessonIdAndGradeId(subReq).subscribe(x => {
         this.subjectsForTrack = x;

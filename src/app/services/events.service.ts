@@ -41,7 +41,7 @@ export class EventsService {
   }
 
   getEventsByTeacherId(teacherId: number, month: number): Observable<any> {
-    const url = `${this.eventsUrl}/getByTeacherID/${teacherId}` + '?month=' + month;
+    const url = `${this.eventsUrl}/getByTeacherID/${this.sharedService.getSeasonId()}/${teacherId}` + '?month=' + month;
     return this.httpClient.get<Events[]>(url, this.getHttpOptions());
   }
 
