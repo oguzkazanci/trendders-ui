@@ -13,7 +13,7 @@ export class IntroductionComponent implements OnInit {
   ngOnInit(): void {
     this.isCollapsed = true;
   }
-	images = [{name: "assets/img/headers/1.gif"}, {name: "assets/img/headers/2.gif"}, {name: "assets/img/headers/3.gif"}, {name: "assets/img/headers/4.gif"}, {name: "assets/img/headers/5.gif"}];
+	images = [{name: "assets/img/headers/new-tda.jpg"}, {name: "assets/img/headers/1.gif"}, {name: "assets/img/headers/2.gif"}, {name: "assets/img/headers/3.gif"}, {name: "assets/img/headers/4.gif"}, {name: "assets/img/headers/5.gif"}];
 
 
     responsiveOptions:any[] = [
