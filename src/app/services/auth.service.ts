@@ -11,9 +11,9 @@ export class AuthService {
   private userFullNameKey: string = 'userFullName';
   private userRoleKey: string = 'rol';
   private userCompanyKey: string = 'company';
-  public baseUrl: string = "http://localhost:8080";
+  //public baseUrl: string = "http://localhost:8080";
   //public baseUrl: string = "https://service.trendders.com";
-  //public baseUrl: string = "https://ozitre.onrender.com";
+  public baseUrl: string = "https://ozitre.onrender.com";
   //public baseUrl: string = "https://ozitre-85b27273aea4.herokuapp.com";
   
 
