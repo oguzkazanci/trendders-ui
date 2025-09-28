@@ -8,9 +8,11 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">
             <div class="col-md-3">
-              <select id="inputStudent" [(ngModel)]="student.studentId" class="form-control" (change)="getStudent($event)" name="inputStudent">
+              <select id="inputStudent" [(ngModel)]="student.studentId" class="form-control"
+                (change)="getStudent($event)" name="inputStudent">
                 <option [value]="undefined" style="display:none">Öğrenci Seçiniz</option>
-                <option *ngFor="let student of students" [value]="student.studentId">{{student.name}} {{student.surname}}</option>
+                <option *ngFor="let student of students" [value]="student.studentId">{{student.name}}
+                  {{student.surname}}</option>
               </select>
             </div>
           </div>
@@ -19,34 +21,40 @@
           <button class="accordion" (click)="accordionChange($event)">Haftalık Soru Sayısı</button>
           <div class="panel" id="panel1">
             <div class="pl-lg-4 topbar">
-              <div class="row">                        
+              <div class="row">
                 <div class="col-1.5" style="margin-right: 10px;">
                   <label class="form-control-label d-show-none" for="input-daterange">Tarih Aralığı</label>
                   <div class="input-group">
                     <input name="datepicker" class="form-control dpWider" [markDisabled]="model" ngbDatepicker
                       #datepicker="ngbDatepicker" [autoClose]="'outside'" outsideDays="hidden" #d="ngbDatepicker"
-                      placeholder="dd-mm-yyyy" (dateSelect)="datePicker($event, 0)" [value]="modelQuest1"/>
-                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button" style="height: 42px;"></button>
+                      placeholder="dd-mm-yyyy" (dateSelect)="datePicker($event, 0)" [value]="modelQuest1" />
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"
+                      style="height: 42px;"></button>
                   </div>
                 </div>
                 <div class="col-1.5">
                   <label class="form-control-label d-show-none" for="input-daterange">-</label>
                   <div class="input-group">
                     <input name="datepicker" class="form-control dpWider" ngbDatepicker #datepicker="ngbDatepicker"
-                      [autoClose]="'outside'" outsideDays="hidden" #d="ngbDatepicker" placeholder="dd-mm-yyyy" [value]="modelQuest2"/>
+                      [autoClose]="'outside'" outsideDays="hidden" #d="ngbDatepicker" placeholder="dd-mm-yyyy"
+                      [value]="modelQuest2" />
                   </div>
                 </div>
                 <div class="col-0.25" style="margin-left: 10px;">
-                  <button type="button" class="btn btn-arrow w3-left" [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="dateChanger(1)">&laquo;</button>
-                  <button type="button" class="btn btn-arrow w3-left" [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="dateChanger(0)">&raquo;</button>
+                  <button type="button" class="btn btn-arrow w3-left"
+                    [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="dateChanger(1)">&laquo;</button>
+                  <button type="button" class="btn btn-arrow w3-left"
+                    [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="dateChanger(0)">&raquo;</button>
                 </div>
                 <div class="col-auto">
                   <div class="form-group">
-                    <button type="button" class="btn btn-primary w3-left" [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="getTargets(0)">Listele</button>
+                    <button type="button" class="btn btn-primary w3-left"
+                      [disabled]="this.modelQuest1 == '' || !student.studentId" (click)="getTargets(0)">Listele</button>
                   </div>
                 </div>
                 <div class="col-sm">
-                  <button type="button" class="btn btn-add" [disabled]="!student.studentId" data-toggle="modal" data-target="#targetQuestionModal" (click)="clear()">Ekle</button>
+                  <button type="button" class="btn btn-add" [disabled]="!student.studentId" data-toggle="modal"
+                    data-target="#targetQuestionModal" (click)="clear()">Ekle</button>
                 </div>
               </div>
             </div>
@@ -66,34 +74,38 @@
                   <tbody style="text-align: center;">
                     <tr *ngFor="let target of questTarget">
                       <td scope="row">
-                        <span class="dot" *ngIf="(target.targetStatus == 1)"></span>    
-                        <span class="dot-warning" *ngIf="(target.targetStatus == 0)"></span> 
-                        <span class="dot-fail" *ngIf="(target.targetStatus == 2)"></span>     
+                        <span class="dot" *ngIf="(target.targetStatus == 1)"></span>
+                        <span class="dot-warning" *ngIf="(target.targetStatus == 0)"></span>
+                        <span class="dot-fail" *ngIf="(target.targetStatus == 2)"></span>
                       </td>
                       <td scope="row">
                         <div *ngFor="let lesson of lessons">
-                          <span *ngIf="lesson.lessonId == target.lessonId">{{lesson.lesson}}</span> 
-                         </div>                 
+                          <span *ngIf="lesson.lessonId == target.lessonId">{{lesson.lesson}}</span>
+                        </div>
                       </td>
                       <td scope="row">
                         <div *ngFor="let subject of subjectsAll">
-                          <span *ngIf="subject.subjectId == target.subjectId">{{subject.subject}}</span> 
-                        </div>                  
+                          <span *ngIf="subject.subjectId == target.subjectId">{{subject.subject}}</span>
+                        </div>
                       </td>
                       <td scope="row">
-                        <span>{{target.targetedNoQ}}</span> 
+                        <span>{{target.targetedNoQ}}</span>
                       </td>
                       <td scope="row">
                         <span>{{target.solvedNoQ}}</span>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-correct" (click)="saveEasyTarget(0, target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-correct" (click)="saveEasyTarget(0, target)"
+                          *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-check"></i></span>
                         </button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#targetQuestionModal" (click)="getTarget(target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                          data-target="#targetQuestionModal" (click)="getTarget(target)"
+                          *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                         </button>
-                        <button type="button" class="btn btn-fail" (click)="saveEasyTarget(1, target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-fail" (click)="saveEasyTarget(1, target)"
+                          *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-times"></i></span>
                         </button>
                       </td>
@@ -113,36 +125,40 @@
           <button class="accordion" (click)="accordionChange($event)">Haftalık Çalışma Süresi</button>
           <div class="panel" id="panel2">
             <div class="pl-lg-4 topbar">
-              <div class="row">                        
+              <div class="row">
                 <div class="col-1.5" style="margin-right: 10px;">
                   <label class="form-control-label d-show-none" for="input-daterange">Tarih Aralığı</label>
                   <div class="input-group">
-                    <input name="datepicker" class="form-control dpWider" [markDisabled]="model"
-                      ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'"
-                      outsideDays="hidden" #d2="ngbDatepicker" placeholder="dd-mm-yyyy"                                    
-                      (dateSelect)="datePicker($event, 1)" [value]="modelTime1"/>
-                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button" style="height: 42px;"></button>
+                    <input name="datepicker" class="form-control dpWider" [markDisabled]="model" ngbDatepicker
+                      #datepicker="ngbDatepicker" [autoClose]="'outside'" outsideDays="hidden" #d2="ngbDatepicker"
+                      placeholder="dd-mm-yyyy" (dateSelect)="datePicker($event, 1)" [value]="modelTime1" />
+                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"
+                      style="height: 42px;"></button>
                   </div>
                 </div>
                 <div class="col-1.5">
                   <label class="form-control-label d-show-none" for="input-daterange">-</label>
                   <div class="input-group">
-                    <input name="datepicker" class="form-control dpWider" ngbDatepicker
-                      #datepicker="ngbDatepicker" [autoClose]="'outside'" outsideDays="hidden"
-                      #d="ngbDatepicker" placeholder="dd-mm-yyyy" [value]="modelTime2"/>
+                    <input name="datepicker" class="form-control dpWider" ngbDatepicker #datepicker="ngbDatepicker"
+                      [autoClose]="'outside'" outsideDays="hidden" #d="ngbDatepicker" placeholder="dd-mm-yyyy"
+                      [value]="modelTime2" />
                   </div>
                 </div>
                 <div class="col-0.25" style="margin-left: 10px;">
-                  <button type="button" class="btn btn-arrow w3-left" [disabled]="this.modelTime1 == '' || !student.studentId" (click)="dateChanger(3)">&laquo;</button>
-                  <button type="button" class="btn btn-arrow w3-left" [disabled]="this.modelTime1 == '' || !student.studentId" (click)="dateChanger(2)">&raquo;</button>
+                  <button type="button" class="btn btn-arrow w3-left"
+                    [disabled]="this.modelTime1 == '' || !student.studentId" (click)="dateChanger(3)">&laquo;</button>
+                  <button type="button" class="btn btn-arrow w3-left"
+                    [disabled]="this.modelTime1 == '' || !student.studentId" (click)="dateChanger(2)">&raquo;</button>
                 </div>
                 <div class="col-auto">
                   <div class="form-group">
-                    <button type="button" class="btn btn-primary w3-left" [disabled]="this.modelTime1 == '' || !student.studentId" (click)="getTargets(1)">Listele</button>
+                    <button type="button" class="btn btn-primary w3-left"
+                      [disabled]="this.modelTime1 == '' || !student.studentId" (click)="getTargets(1)">Listele</button>
                   </div>
                 </div>
                 <div class="col-sm">
-                  <button type="button" class="btn btn-add" [disabled]="!student.studentId" data-toggle="modal" data-target="#targetTimeModal" (click)="clear()">Ekle</button>
+                  <button type="button" class="btn btn-add" [disabled]="!student.studentId" data-toggle="modal"
+                    data-target="#targetTimeModal" (click)="clear()">Ekle</button>
                 </div>
               </div>
             </div>
@@ -161,31 +177,34 @@
                   <tbody style="text-align: center;">
                     <tr *ngFor="let target of timeTarget">
                       <td scope="row">
-                        <span class="dot" *ngIf="(target.targetStatus == 1)"></span>    
-                        <span class="dot-warning" *ngIf="(target.targetStatus == 0)"></span> 
-                        <span class="dot-fail" *ngIf="(target.targetStatus == 2)"></span>     
+                        <span class="dot" *ngIf="(target.targetStatus == 1)"></span>
+                        <span class="dot-warning" *ngIf="(target.targetStatus == 0)"></span>
+                        <span class="dot-fail" *ngIf="(target.targetStatus == 2)"></span>
                       </td>
                       <td scope="row">
                         <div *ngFor="let lesson of lessons">
-                          <span *ngIf="lesson.lessonId == target.lessonId">{{lesson.lesson}}</span> 
-                        </div>                 
+                          <span *ngIf="lesson.lessonId == target.lessonId">{{lesson.lesson}}</span>
+                        </div>
                       </td>
                       <td scope="row">
                         <div *ngFor="let subject of subjectsAll">
-                          <span *ngIf="subject.subjectId == target.subjectId">{{subject.subject}}</span> 
-                        </div>                  
+                          <span *ngIf="subject.subjectId == target.subjectId">{{subject.subject}}</span>
+                        </div>
                       </td>
                       <td scope="row">
-                        <span>{{target.studyTimeinMin}}</span> 
+                        <span>{{target.studyTimeinMin}}</span>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-correct" (click)="saveEasyTarget(2, target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-correct" (click)="saveEasyTarget(2, target)"
+                          *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-check"></i></span>
                         </button>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#targetTimeModal" (click)="getTarget(target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#targetTimeModal"
+                          (click)="getTarget(target)" *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                         </button>
-                        <button type="button" class="btn btn-fail" (click)="saveEasyTarget(3, target)" *ngIf="(target.targetStatus != 2)">
+                        <button type="button" class="btn btn-fail" (click)="saveEasyTarget(3, target)"
+                          *ngIf="(target.targetStatus != 2)">
                           <span class="btn-inner--icon"><i class="fa fa-times"></i></span>
                         </button>
                       </td>
@@ -207,9 +226,10 @@
             <div class="pl-lg-4">
               <div class="row">
                 <ng-container *ngFor="let givenBook of givenBooksLesson">
-                    <div class="button-container" style="margin: 5px 10px 10px 0px">
-                      <button type="button" class="btn" [value]="givenBook" [disabled]="!student.studentId" (click)="getSubjectForTracking(givenBook)">{{ givenBook[0] }} - {{ givenBook[3] }}</button>
-                    </div>
+                  <div class="button-container" style="margin: 5px 10px 10px 0px">
+                    <button type="button" class="btn" [value]="givenBook" [disabled]="!student.studentId"
+                      (click)="getSubjectForTracking(givenBook)">{{ givenBook[0] }} - {{ givenBook[3] }}</button>
+                  </div>
                 </ng-container>
               </div>
             </div>
@@ -218,37 +238,34 @@
                 <table class="table table-bordered align-items-center table-flush">
                   <thead class="thead-light" style="text-align: center;">
                     <tr>
-                      <th>Sınav Türü</th>
-                      <th>Konu</th>
-                      <th *ngFor="let publisher of getUniquePublishers()"> {{ publisher.PUBLISHER_NAME }}</th>
+                      <th *ngFor="let book of getUniqueBooks()">
+                        {{ book.LABEL }}
+                      </th>
                     </tr>
                   </thead>
-                  <tbody style="text-align: center;">
-                    <tr *ngFor="let row of getUniqueSubjects()">
-                      <td style="width: 25px;">{{ row.EXAM_TYPE }}</td>
-                      <td style="text-align: left;">{{ row.SUBJECT }}</td>
-                      <ng-container *ngFor="let publisher of getUniquePublishers()">
-                        <ng-container *ngIf="getWorkStatus(row.SUBJECT_ID, publisher.BOOK_ID) === 'Çalışıyor';else others">
-                          <td [ngClass]="selectedColor" style="width: 50px;">
-                            <button type="button" class="btn btn-success btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 2)"></button>
-                            <button type="button" class="btn btn-danger btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 0)"></button>
-                          </td>
-                        </ng-container>
-                        <ng-template #others>
-                          <ng-container *ngIf="getWorkStatus(row.SUBJECT_ID, publisher.BOOK_ID) === 'Tamamlandı';else third">
-                            <td [ngClass]="selectedColor" style="width: 50px;">
-                              <button type="button" class="btn btn-warning btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 1)"></button>
-                              <button type="button" class="btn btn-danger btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 0)"></button>
-                            </td>
-                          </ng-container>
-                        </ng-template>
-                        <ng-template #third>
-                          <td [ngClass]="selectedColor" style="width: 50px;">
-                            <button type="button" class="btn btn-success btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 2)"></button>
-                            <button type="button" class="btn btn-warning btn-sm" (click)="listProgressStatus(publisher.GIVEN_BOOK_ID, row.SUBJECT_ID, publisher.BOOK_ID, 1)"></button>
-                          </td>
-                        </ng-template>
-                      </ng-container>
+                  <tbody>
+                    <tr *ngFor="let row of getUniqueSubjectsFlat()">
+                      <td *ngFor="let book of getUniqueBooks()"
+                        [ngClass]="getTdColorClass(row.SUBJECT_ID, book.BOOK_ID)">
+                        <div class="cell-flex">
+                          <span class="subject-text">{{ row.SUBJECT }}</span>
+
+                          <div class="cell-actions" [attr.data-progress]="getProgress(row.SUBJECT_ID, book.BOOK_ID)">
+                            <button type="button" class="btn btn-success btn-sm"
+                              *ngIf="getProgress(row.SUBJECT_ID, book.BOOK_ID) !== 2"
+                              (click)="listProgressStatus(book.GIVEN_BOOK_ID, row.SUBJECT_ID, book.BOOK_ID, 2)">
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm"
+                              *ngIf="getProgress(row.SUBJECT_ID, book.BOOK_ID) !== 1"
+                              (click)="listProgressStatus(book.GIVEN_BOOK_ID, row.SUBJECT_ID, book.BOOK_ID, 1)">
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm"
+                              *ngIf="getProgress(row.SUBJECT_ID, book.BOOK_ID) !== 0"
+                              (click)="listProgressStatus(book.GIVEN_BOOK_ID, row.SUBJECT_ID, book.BOOK_ID, 0)">
+                            </button>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -258,9 +275,10 @@
               <div class="col-3">
               </div>
               <div class="col my-auto">
-                  <button id="saveProgressButton" type="button" [disabled]="!buttonState" class="btn btn-save" (click)="saveProgressStatus()">
-                      Kaydet
-                  </button>
+                <button id="saveProgressButton" type="button" [disabled]="!buttonState" class="btn btn-save"
+                  (click)="saveProgressStatus()">
+                  Kaydet
+                </button>
               </div>
             </div>
           </div>
@@ -268,13 +286,13 @@
           <div class="panel" id="panel4">
             <div class="pl-lg-4">
               <div class="row">
-                    <div class="button-container" style="margin: 5px 10px 10px 0px">
-                      <select id="input-foyLesson" name="input-foyLesson" class="form-control" (change)="getFoySubjects()"
-                          [(ngModel)]="selectedFoyId" [disabled]="!student.studentId">
-                        <option [value]="undefined" style="display:none">Föy Seçiniz</option>
-                        <option *ngFor="let lesson of foyLessons" [value]="lesson.id">{{lesson.name}}</option>
-                      </select>
-                    </div>
+                <div class="button-container" style="margin: 5px 10px 10px 0px">
+                  <select id="input-foyLesson" name="input-foyLesson" class="form-control" (change)="getFoySubjects()"
+                    [(ngModel)]="selectedFoyId" [disabled]="!student.studentId">
+                    <option [value]="undefined" style="display:none">Föy Seçiniz</option>
+                    <option *ngFor="let lesson of foyLessons" [value]="lesson.id">{{lesson.name}}</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="pl-lg-4">
@@ -295,19 +313,27 @@
                       <td>{{ subject.seans }}</td>
                       <ng-container *ngIf="findSubjectProgress(subject.kod); else noMatch">
                         <td [ngClass]="getStatusClass(findSubjectProgress(subject.kod)?.progress)">
-                          <button type="button" class="btn btn-success btn-sm" *ngIf="findSubjectProgress(subject.kod)?.progress != 2" (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 2)">
+                          <button type="button" class="btn btn-success btn-sm"
+                            *ngIf="findSubjectProgress(subject.kod)?.progress != 2"
+                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 2)">
                           </button>
-                          <button type="button" class="btn btn-warning btn-sm" *ngIf="findSubjectProgress(subject.kod)?.progress != 1" (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 1)">
+                          <button type="button" class="btn btn-warning btn-sm"
+                            *ngIf="findSubjectProgress(subject.kod)?.progress != 1"
+                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 1)">
                           </button>
-                          <button type="button" class="btn btn-danger btn-sm" *ngIf="findSubjectProgress(subject.kod)?.progress != 0" (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 0)">
+                          <button type="button" class="btn btn-danger btn-sm"
+                            *ngIf="findSubjectProgress(subject.kod)?.progress != 0"
+                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 0)">
                           </button>
                         </td>
                       </ng-container>
-                
+
                       <ng-template #noMatch>
                         <td [ngClass]="getStatusClass(null)">
-                          <button type="button" class="btn btn-success btn-sm" (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 2)"></button>
-                          <button type="button" class="btn btn-warning btn-sm" (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 1)"></button>
+                          <button type="button" class="btn btn-success btn-sm"
+                            (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 2)"></button>
+                          <button type="button" class="btn btn-warning btn-sm"
+                            (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 1)"></button>
                         </td>
                       </ng-template>
                     </tr>
@@ -319,9 +345,10 @@
               <div class="col-3">
               </div>
               <div class="col my-auto">
-                  <button id="saveProgressButton" type="button" [disabled]="!buttonStateSP" class="btn btn-save" (click)="saveSubjectProgress()">
-                      Kaydet
-                  </button>
+                <button id="saveProgressButton" type="button" [disabled]="!buttonStateSP" class="btn btn-save"
+                  (click)="saveSubjectProgress()">
+                  Kaydet
+                </button>
               </div>
             </div>
           </div>
@@ -329,8 +356,8 @@
           <div class="panel" id="panel5">
             <div class="pl-lg-4">
               <div class="row">
-                    <div class="button-container" style="margin: 5px 10px 10px 0px">
-                    </div>
+                <div class="button-container" style="margin: 5px 10px 10px 0px">
+                </div>
               </div>
             </div>
             <div class="pl-lg-4">
@@ -390,30 +417,44 @@
                         <button type="button" class="btn btn-danger btn-sm" (click)="deleteExam(exam.examId)"></button>
                       </td>
                     </tr>
-              
+
                     <!-- Yeni satır eklemek için input alanları -->
                     <tr>
-                      <td><input type="text" [(ngModel)]="newExam.examName" placeholder="Sınav İsmi" class="form-control form-control-alternative"/></td>
-                      <td><input type="date" [(ngModel)]="newExam.examDate"  class="form-control form-control-alternative"/></td>
-                      <td><input type="number" [(ngModel)]="newExam.turkishD" placeholder="D" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.turkishY" placeholder="Y" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.turkishN" placeholder="N" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.mathD" placeholder="D" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.mathY" placeholder="Y" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.mathN" placeholder="N" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.scienceD" placeholder="D" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.scienceY" placeholder="Y" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.scienceN" placeholder="N" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.socialD" placeholder="D" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.socialY" placeholder="Y" class="form-control form-control-alternative small-column" /></td>
-                      <td><input type="number" [(ngModel)]="newExam.socialN" placeholder="N" class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="text" [(ngModel)]="newExam.examName" placeholder="Sınav İsmi"
+                          class="form-control form-control-alternative" /></td>
+                      <td><input type="date" [(ngModel)]="newExam.examDate"
+                          class="form-control form-control-alternative" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.turkishD" placeholder="D"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.turkishY" placeholder="Y"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.turkishN" placeholder="N"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.mathD" placeholder="D"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.mathY" placeholder="Y"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.mathN" placeholder="N"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.scienceD" placeholder="D"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.scienceY" placeholder="Y"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.scienceN" placeholder="N"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.socialD" placeholder="D"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.socialY" placeholder="Y"
+                          class="form-control form-control-alternative small-column" /></td>
+                      <td><input type="number" [(ngModel)]="newExam.socialN" placeholder="N"
+                          class="form-control form-control-alternative small-column" /></td>
                       <td class="small-column"> {{ calculateCorrect(newExam) }} </td>
                       <td class="small-column"> {{ calculateWrong(newExam) }}</td>
                       <td class="small-column"> {{ calculateNet(newExam) }} </td>
                     </tr>
                   </tbody>
                 </table>
-              
+
                 <!-- Satır ekleme butonu -->
               </div>
             </div>
@@ -421,7 +462,8 @@
               <div class="col-3">
               </div>
               <div class="col my-auto">
-                <button id="saveProgressButton" type="button" [disabled]="!student.studentId" class="btn btn-save" (click)="saveExam()">
+                <button id="saveProgressButton" type="button" [disabled]="!student.studentId" class="btn btn-save"
+                  (click)="saveExam()">
                   Sınav Ekle
                 </button>
               </div>
@@ -434,7 +476,8 @@
 </div>
 
 <!-- Target Question Modal Screen -->
-<div class="modal fade" id="targetQuestionModal" tabindex="-1" role="dialog" aria-labelledby="targetQuestionModalTitle" aria-hidden="true">
+<div class="modal fade" id="targetQuestionModal" tabindex="-1" role="dialog" aria-labelledby="targetQuestionModalTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -450,7 +493,8 @@
           <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-date-ts">Tarih</label>
-              <input type="date" id="input-date-ts" class="form-control form-control-alternative" [value]="target.targetDate" (change)="target.targetDate = $event.target.value">
+              <input type="date" id="input-date-ts" class="form-control form-control-alternative"
+                [value]="target.targetDate" (change)="target.targetDate = $event.target.value">
             </div>
           </div>
           <div class="col-lg-4">
@@ -461,30 +505,35 @@
             <label class="form-control-label" for="inputLesson">Ders</label>
             <select id="inputLesson" class="form-control" (change)="getSubjects($event)">
               <option style="display:none" selected>Seçiniz</option>
-              <option *ngFor="let lesson of lessons" [value]="lesson.lessonId" [selected]="lesson.lessonId == target.lessonId">{{lesson.lesson}}</option>
+              <option *ngFor="let lesson of lessons" [value]="lesson.lessonId"
+                [selected]="lesson.lessonId == target.lessonId">{{lesson.lesson}}</option>
             </select>
           </div>
           <div class="form-group col-md-6">
             <label class="form-control-label" for="inputSubjects">Konu</label>
             <select id="inputSubjects" class="form-control" [(ngModel)]="target.subjectId">
               <option selected [value]="0">Genel</option>
-              <option *ngFor="let subject of subjects" [value]="subject.subjectId" [selected]="subject.subjectId==target.subjectId">{{subject.subject}}</option>
+              <option *ngFor="let subject of subjects" [value]="subject.subjectId"
+                [selected]="subject.subjectId==target.subjectId">{{subject.subject}}</option>
             </select>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label class="form-control-label" for="input-address">Hedef Soru Sayısı</label>
-            <input id="input-address" class="form-control form-control-alternative" placeholder="100" type="number" [value]="target.targetedNoQ" (change)="target.targetedNoQ = $event.target.value">
+            <input id="input-address" class="form-control form-control-alternative" placeholder="100" type="number"
+              [value]="target.targetedNoQ" (change)="target.targetedNoQ = $event.target.value">
           </div>
           <div class="form-group col-md-6">
             <label class="form-control-label" for="input-address">Çözülen Soru Sayısı</label>
-            <input id="input-address" class="form-control form-control-alternative" placeholder="100" type="number" [value]="target.solvedNoQ" (change)="target.solvedNoQ = $event.target.value">
+            <input id="input-address" class="form-control form-control-alternative" placeholder="100" type="number"
+              [value]="target.solvedNoQ" (change)="target.solvedNoQ = $event.target.value">
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button id="closeTargetQuestionModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onCloseModal()">Kapat</button>
+        <button id="closeTargetQuestionModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal"
+          (click)="onCloseModal()">Kapat</button>
         <button class="btn btn-success btn-primary" [disabled]="!target.targetDate" (click)="saveTarget(0)">
           Kaydet
         </button>
@@ -494,7 +543,8 @@
 </div>
 
 <!-- Target Time Modal Screen -->
-<div class="modal fade" id="targetTimeModal" tabindex="-1" role="dialog" aria-labelledby="targetTimeModalTitle" aria-hidden="true">
+<div class="modal fade" id="targetTimeModal" tabindex="-1" role="dialog" aria-labelledby="targetTimeModalTitle"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -510,7 +560,8 @@
           <div class="col-lg-4">
             <div class="form-group">
               <label class="form-control-label" for="input-date-ts">Tarih</label>
-              <input type="date" id="input-date-ts" class="form-control form-control-alternative" [value]="target.targetDate" (change)="target.targetDate = $event.target.value">
+              <input type="date" id="input-date-ts" class="form-control form-control-alternative"
+                [value]="target.targetDate" (change)="target.targetDate = $event.target.value">
             </div>
           </div>
           <div class="col-lg-4">
@@ -521,14 +572,16 @@
             <label class="form-control-label" for="inputLesson">Ders</label>
             <select id="inputLesson" class="form-control" (change)="getSubjects($event)">
               <option style="display:none" selected>Seçiniz</option>
-              <option *ngFor="let lesson of lessons" [value]="lesson.lessonId" [selected]="lesson.lessonId == target.lessonId">{{lesson.lesson}}</option>
+              <option *ngFor="let lesson of lessons" [value]="lesson.lessonId"
+                [selected]="lesson.lessonId == target.lessonId">{{lesson.lesson}}</option>
             </select>
           </div>
           <div class="form-group col-md-6">
             <label class="form-control-label" for="inputSubjects">Konu</label>
             <select id="inputSubjects" class="form-control" [(ngModel)]="target.subjectId" name="inputSubjects">
               <option selected [value]="0">Genel</option>
-              <option *ngFor="let subject of subjects" [value]="subject.subjectId" [selected]="subject.subjectId==target.subjectId">{{subject.subject}}</option>
+              <option *ngFor="let subject of subjects" [value]="subject.subjectId"
+                [selected]="subject.subjectId==target.subjectId">{{subject.subject}}</option>
             </select>
           </div>
         </div>
@@ -538,7 +591,8 @@
           <div class="form-group col-md-6">
             <label class="form-control-label" for="input-study-time">Çalışma Süresi</label>
             <div class="input-group input-group-alternative mb-4">
-              <input type="text" id="input-study-time" class="form-control form-control-alternative" placeholder="100" type="number" [value]="target.studyTimeinMin" (change)="target.studyTimeinMin = $event.target.value">
+              <input type="text" id="input-study-time" class="form-control form-control-alternative" placeholder="100"
+                type="number" [value]="target.studyTimeinMin" (change)="target.studyTimeinMin = $event.target.value">
               <div class="input-group-prepend">
                 <span class="input-group-text">dk.</span>
               </div>
@@ -549,7 +603,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="closeTargetTimeModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal" (click)="onCloseModal()">Kapat</button>
+        <button id="closeTargetTimeModal" type="button" class="btn btn-secondary btn-default" data-dismiss="modal"
+          (click)="onCloseModal()">Kapat</button>
         <button class="btn btn-success btn-primary" [disabled]="!target.targetDate" (click)="saveTarget(1)">
           Kaydet
         </button>

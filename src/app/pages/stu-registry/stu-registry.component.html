@@ -140,6 +140,17 @@
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
+                    <label class="form-control-label" for="input-totalPrice">Alınan Peşinat</label>
+                    <div class="input-group input-group-alternative mb-4">
+                      <input type="text" id="input-totalPrice" class="form-control form-control-alternative first-letter" [(ngModel)]="student.advancePrice">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">₺</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
                     <label class="form-control-label" for="inputReqState">Başlanacak Ay</label>
                     <select id="inputReqState" class="form-control" [(ngModel)]="student.startMonth">
                       <option *ngFor="let month of months" [value]="month.value">{{month.label}}</option>

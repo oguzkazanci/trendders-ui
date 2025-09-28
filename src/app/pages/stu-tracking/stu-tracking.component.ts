@@ -29,13 +29,13 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./stu-tracking.component.css']
 })
 export class StuTrackingComponent implements OnInit {
-  
-	students: Students[] = [];
-	student: Students;	
+
+  students: Students[] = [];
+  student: Students;
   questTarget: Targets[] = [];
   timeTarget: Targets[] = [];
   target: Targets;
-	lessons: Lessons[] = [];
+  lessons: Lessons[] = [];
   subjects: Subject[] = [];
   subjectsForTrack: Subject[] = [];
   subjectsAll: Subject[] = [];
@@ -51,16 +51,16 @@ export class StuTrackingComponent implements OnInit {
   books: Library[] = [];
   publishers: Publisher[] = [];
   hoveredDate: NgbDate | null = null;
-	fromDate: NgbDate | null;
-	toDate: NgbDate | null;
-	isDisabled: any;
-	model: any;
+  fromDate: NgbDate | null;
+  toDate: NgbDate | null;
+  isDisabled: any;
+  model: any;
   selectedLesson: any;
   selectedColor: string = 'red-row';
-	modelQuest1: any = "";
-	modelQuest2: any = "";
-	modelTime1: any = "";
-	modelTime2: any = "";
+  modelQuest1: any = "";
+  modelQuest2: any = "";
+  modelTime1: any = "";
+  modelTime2: any = "";
   totalWorkTime: any;
   totalSolvedQuestion: any;
   foyLessons: any[] = [];
@@ -73,18 +73,18 @@ export class StuTrackingComponent implements OnInit {
 
   constructor(private studentsService: StudentsService, public formatter: NgbDateParserFormatter,
     private calendar: NgbCalendar, private sharedService: SharedService, private lessonsService: LessonsService,
-	  private subjectService: SubjectService, private targetsService: TargetsService,
+    private subjectService: SubjectService, private targetsService: TargetsService,
     private datePipe: DatePipe, private trackingService: TrackingService, private messageService: MessageService) {
     this.getStudents();
     this.getPublishers();
     this.datePicker(0, 0);
     this.datePicker(0, 1);
-    this.isDisabled = (date: NgbDate) => 
-    this.calendar.getWeekday(date) !== 1;
-	  this.model = (date: NgbDate) => 
-    this.calendar.getWeekday(date) !== 1;
-	  this.student = new Students();
-	  this.target = new Targets();
+    this.isDisabled = (date: NgbDate) =>
+      this.calendar.getWeekday(date) !== 1;
+    this.model = (date: NgbDate) =>
+      this.calendar.getWeekday(date) !== 1;
+    this.student = new Students();
+    this.target = new Targets();
     this.bookTrack = new BookProgress();
     this.newExam = new ExamProgress();
   }
@@ -125,7 +125,7 @@ export class StuTrackingComponent implements OnInit {
         this.getTargets(0);
         this.showSuccess();
       });
-    } else if(type == 1) {
+    } else if (type == 1) {
       target.targetStatus = 2;
       this.targetsService.addTarget(target).subscribe(target1 => {
         this.getTargets(0);
@@ -148,14 +148,14 @@ export class StuTrackingComponent implements OnInit {
 
   getTargets(type: number): void {
     this.getSubjectsAll();
-    var tempStudentId: number = +((document.getElementById("inputStudent")as HTMLInputElement).value);
+    var tempStudentId: number = +((document.getElementById("inputStudent") as HTMLInputElement).value);
     if (type == 0) {
       this.questTarget = [];
       this.targetsService.getTargets(type, tempStudentId, this.modelQuest1).subscribe(z => {
         this.questTarget = z;
         this.targetsService.getTotalSolvedQuestion(tempStudentId, this.modelQuest1).subscribe(z => {
           this.totalSolvedQuestion = z;
-          var tempAcc = document.getElementById("panel1")as HTMLElement;
+          var tempAcc = document.getElementById("panel1") as HTMLElement;
           tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
           tempAcc.style.minHeight = "375px";
         });
@@ -166,11 +166,11 @@ export class StuTrackingComponent implements OnInit {
         this.timeTarget = z;
         this.targetsService.getTotalWorkTime(tempStudentId, this.modelTime1).subscribe(z => {
           this.totalWorkTime = z;
-          var tempAcc = document.getElementById("panel2")as HTMLElement;
+          var tempAcc = document.getElementById("panel2") as HTMLElement;
           tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
           tempAcc.style.minHeight = "375px";
         });
-      });      
+      });
     }
   }
 
@@ -181,19 +181,19 @@ export class StuTrackingComponent implements OnInit {
     })
   }
 
-  getStudents(): void{
+  getStudents(): void {
     this.studentsService.getStudentsByRegState(0).subscribe(z => this.students = z);
   }
 
-  getSubjectsAll(): void{
-	  this.subjectsAll =  [];
+  getSubjectsAll(): void {
+    this.subjectsAll = [];
     this.subjectService.getSubjects().subscribe(x => {
-		this.subjectsAll = x;
+      this.subjectsAll = x;
     })
   }
 
-  getSubjects(event): void{
-    this.subjects =  [];
+  getSubjects(event): void {
+    this.subjects = [];
     this.subjectService.getSubjectByLessonId(event.target.value).subscribe(x => {
       this.subjects = x;
     })
@@ -202,7 +202,7 @@ export class StuTrackingComponent implements OnInit {
 
   getStudent(event): void {
     const id = this.students[event.target.selectedIndex - 1].studentId;
-    this.studentsService.getStudent(id).subscribe( x => this.student = x);
+    this.studentsService.getStudent(id).subscribe(x => this.student = x);
     this.subjectsForTrack = [];
     this.bookProgresses = [];
     this.givenBooks = [];
@@ -212,12 +212,12 @@ export class StuTrackingComponent implements OnInit {
     this.subjectProgressListChange = [];
     this.examList = [];
     this.newExam = new ExamProgress();
-    this.trackingService.getLessonsByStudentId(event.target.value).subscribe(x => this.givenBooksLesson = x );
+    this.trackingService.getLessonsByStudentId(event.target.value).subscribe(x => this.givenBooksLesson = x);
     this.getExamProgressByStudentId(event.target.value);
   }
 
   getPublishers(): void {
-    this.lessonsService.getPublisher().subscribe(x => this.publishers = x )
+    this.lessonsService.getPublisher().subscribe(x => this.publishers = x)
   }
 
   getSubjectForTracking(givenBook: string[]) {
@@ -226,7 +226,7 @@ export class StuTrackingComponent implements OnInit {
     var subReq = new SubjectRequest;
     subReq.gradeId = +gradeId;
     subReq.lessonId = this.selectedLesson;
-    this.subjectsForTrack =  [];
+    this.subjectsForTrack = [];
     this.bookProgresses = [];
     this.givenBooks = [];
     this.trackingService.getGivenBook(this.student.studentId, this.selectedLesson, gradeId).subscribe(x => {
@@ -235,7 +235,7 @@ export class StuTrackingComponent implements OnInit {
         this.subjectsForTrack = x;
         this.trackingService.getProgressByStudentIdAndLessonId(this.student.studentId, this.selectedLesson).subscribe(x => {
           this.bookProgresses = x;
-          var tempAcc = document.getElementById("panel3")as HTMLElement;
+          var tempAcc = document.getElementById("panel3") as HTMLElement;
           tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
           tempAcc.style.minHeight = "375px";
         });
@@ -246,7 +246,7 @@ export class StuTrackingComponent implements OnInit {
   listProgressStatus(givenBookId: number, subjectId: number, bookId: number, type: number) {
     var tempState = 0;
     var tempState2 = 0;
-    var tempStudentId: number = +((document.getElementById("inputStudent")as HTMLInputElement).value);
+    var tempStudentId: number = +((document.getElementById("inputStudent") as HTMLInputElement).value);
     this.bookTrack = new BookProgress();
     this.bookTrack.bookProgressId = null;
     this.bookTrack.studentId = tempStudentId;
@@ -255,18 +255,18 @@ export class StuTrackingComponent implements OnInit {
     this.bookTrack.progress = type;
     this.bookTrack.bookId = bookId;
     this.bookTrack.lessonId = this.selectedLesson;
-    this.bookProgresses.forEach((value,index)=>{
-      if(value.studentId == this.bookTrack.studentId && value.bookId == this.bookTrack.bookId && 
-       value.subjectId == this.bookTrack.subjectId && value.givenBookId == this.bookTrack.givenBookId) {
+    this.bookProgresses.forEach((value, index) => {
+      if (value.studentId == this.bookTrack.studentId && value.bookId == this.bookTrack.bookId &&
+        value.subjectId == this.bookTrack.subjectId && value.givenBookId == this.bookTrack.givenBookId) {
         this.bookProgresses[index].progress = type;
         tempState = 1;
       }
     });
-    this.progressList.forEach((value, index)=>{
-      if(value.studentId == this.bookTrack.studentId && value.bookId == this.bookTrack.bookId && 
+    this.progressList.forEach((value, index) => {
+      if (value.studentId == this.bookTrack.studentId && value.bookId == this.bookTrack.bookId &&
         value.subjectId == this.bookTrack.subjectId && value.givenBookId == this.bookTrack.givenBookId) {
-         this.progressList[index].progress = type;
-         tempState2 = 1;
+        this.progressList[index].progress = type;
+        tempState2 = 1;
       }
     });
     if (tempState == 0) {
@@ -277,14 +277,14 @@ export class StuTrackingComponent implements OnInit {
     }
     this.buttonState = true;
     setTimeout(() => {
-      var tempAcc = document.getElementById("panel3")as HTMLElement;
+      var tempAcc = document.getElementById("panel3") as HTMLElement;
       tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
       tempAcc.style.minHeight = "375px";
     }, 300);
   }
 
   saveProgressStatus() {
-    this.progressList.forEach((value, index)=>{
+    this.progressList.forEach((value, index) => {
       this.buttonState = false;
       this.trackingService.saveBookProgress(value).subscribe(track => {
         this.progressList = [];
@@ -295,15 +295,15 @@ export class StuTrackingComponent implements OnInit {
 
   getUniquePublishers(): any[] {
     const uniquePublishers: any[] = [];
-  
+
     this.givenBooks.forEach(item => {
       for (let publisher of this.publishers) {
         if ((item.publisherId && !uniquePublishers.includes(publisher.publisherName)) && publisher.publisherId == item.publisherId) {
-          uniquePublishers.push({ PUBLISHER_NAME: publisher.publisherName, PUBLISHER_ID: publisher.publisherId, BOOK_ID: item.bookId, GIVEN_BOOK_ID: item.givenBookId});
+          uniquePublishers.push({ PUBLISHER_NAME: publisher.publisherName, PUBLISHER_ID: publisher.publisherId, BOOK_ID: item.bookId, GIVEN_BOOK_ID: item.givenBookId });
         }
       }
     });
-  
+
     return uniquePublishers;
   }
 
@@ -317,18 +317,18 @@ export class StuTrackingComponent implements OnInit {
         uniqueSubjects.push({ SUBJECT: item.subject, EXAM_TYPE: gradeId, SUBJECT_ID: item.subjectId });
       }
     });
-  
+
     return uniqueSubjects;
   }
-  
+
   getWorkStatus(subjectId: number, bookId: number): string {
     const matchingItem = this.bookProgresses.find(item => item.subjectId === subjectId && item.bookId === bookId);
-  
+
     if (!matchingItem) {
       this.selectedColor = 'red-row';
       return 'Bilinmiyor';
     }
-    
+
     if (matchingItem.progress === 1) {
       this.selectedColor = 'orange-row';
       return 'Çalışıyor';
@@ -350,9 +350,9 @@ export class StuTrackingComponent implements OnInit {
     this.target.subjectId = 0;
   }
 
-  accordionChange(event) {    
+  accordionChange(event) {
     var element = event.target;
-    element.classList.toggle("active"); 
+    element.classList.toggle("active");
     var panel = element.nextElementSibling;
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
@@ -365,37 +365,37 @@ export class StuTrackingComponent implements OnInit {
 
   datePicker(event, type) {
     var date = "";
-    if (event == 0){
+    if (event == 0) {
       var tmpDate = new Date();
       var day = tmpDate.getDay(),
-      diff = tmpDate.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+        diff = tmpDate.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
       tmpDate = new Date(tmpDate.setDate(diff));
       date = this.datePipe.transform(tmpDate, "yyyy-MM-dd");
-    } else     
+    } else
       date = event.year + "-" + event.month + "-" + event.day
-    
-      const mod =  moment(date, "YYYY-MM-DD").toDate();
 
-      if (type == 0) {
-        this.modelQuest1 = moment(mod).format('DD-MM-YYYY');
-        const picker = moment(date, "YYYY-MM-DD").add(7, 'days').toDate();
-        this.modelQuest2 = moment(picker).format('DD-MM-YYYY');
-      } else if (type == 1) {
-        this.modelTime1 = moment(mod).format('DD-MM-YYYY');
-        const picker = moment(date, "YYYY-MM-DD").add(7, 'days').toDate();
-        this.modelTime2 = moment(picker).format('DD-MM-YYYY');
-      }
+    const mod = moment(date, "YYYY-MM-DD").toDate();
+
+    if (type == 0) {
+      this.modelQuest1 = moment(mod).format('DD-MM-YYYY');
+      const picker = moment(date, "YYYY-MM-DD").add(7, 'days').toDate();
+      this.modelQuest2 = moment(picker).format('DD-MM-YYYY');
+    } else if (type == 1) {
+      this.modelTime1 = moment(mod).format('DD-MM-YYYY');
+      const picker = moment(date, "YYYY-MM-DD").add(7, 'days').toDate();
+      this.modelTime2 = moment(picker).format('DD-MM-YYYY');
+    }
   }
 
   dateChanger(type: any) {
-    if(type == 0) {
+    if (type == 0) {
       this.modelQuest1 = this.modelQuest2;
       const picker = moment(this.modelQuest2, "DD-MM-YYYY").add(7, 'days').toDate();
       this.modelQuest2 = moment(picker).format('DD-MM-YYYY');
       this.getTargets(0);
     } else if (type == 1) {
       this.modelQuest2 = this.modelQuest1;
-      const mod =  moment(this.modelQuest1, "DD-MM-YYYY").add(-7, 'days').toDate();
+      const mod = moment(this.modelQuest1, "DD-MM-YYYY").add(-7, 'days').toDate();
       this.modelQuest1 = moment(mod).format('DD-MM-YYYY');
       this.getTargets(0);
     } else if (type == 2) {
@@ -405,7 +405,7 @@ export class StuTrackingComponent implements OnInit {
       this.getTargets(1);
     } else if (type == 3) {
       this.modelTime2 = this.modelTime1;
-      const mod =  moment(this.modelTime1, "DD-MM-YYYY").add(-7, 'days').toDate();
+      const mod = moment(this.modelTime1, "DD-MM-YYYY").add(-7, 'days').toDate();
       this.modelTime1 = moment(mod).format('DD-MM-YYYY');
       this.getTargets(1);
     }
@@ -428,7 +428,7 @@ export class StuTrackingComponent implements OnInit {
       }
     });
     setTimeout(() => {
-      var tempAcc = document.getElementById("panel4")as HTMLElement;
+      var tempAcc = document.getElementById("panel4") as HTMLElement;
       tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
       tempAcc.style.minHeight = "375px";
     }, 300);
@@ -439,7 +439,7 @@ export class StuTrackingComponent implements OnInit {
     var subProg = new SubjectProgress();
     const existingProgress = this.subjectProgressList.flat().find(sp => sp.foyKod === subjectProgress.foyKod);
     const changeExistingProgress = this.subjectProgressListChange.find(sp => sp.foyKod === subjectProgress.foyKod);
-    
+
     if (existingProgress) {
       this.subjectProgressList.flat().find(sp => sp.foyKod === subjectProgress.foyKod).progress = status;
     } else {
@@ -458,14 +458,14 @@ export class StuTrackingComponent implements OnInit {
       this.subjectProgressListChange.push(subProg);
     }
     setTimeout(() => {
-      var tempAcc = document.getElementById("panel4")as HTMLElement;
+      var tempAcc = document.getElementById("panel4") as HTMLElement;
       tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
       tempAcc.style.minHeight = "375px";
     }, 300);
   }
 
   saveSubjectProgress() {
-    this.subjectProgressListChange.forEach(value=>{
+    this.subjectProgressListChange.forEach(value => {
       this.buttonStateSP = false;
       this.trackingService.saveSubjectProgress(value).subscribe(track => {
         this.subjectProgressListChange = [];
@@ -475,11 +475,11 @@ export class StuTrackingComponent implements OnInit {
   }
 
   findSubjectProgress(foyKod: string): SubjectProgress | undefined {
-    return this.subjectProgressList?.flat().find(subProg => { return subProg.foyKod === foyKod;});
+    return this.subjectProgressList?.flat().find(subProg => { return subProg.foyKod === foyKod; });
   }
 
   getStatusClass(status: number): string {
-    switch(status) {
+    switch (status) {
       case 0: return 'red-row';
       case 1: return 'orange-row';
       case 2: return 'green-row';
@@ -488,23 +488,23 @@ export class StuTrackingComponent implements OnInit {
   }
 
   showSuccess() {
-    this.messageService.add({severity:'success', summary: 'Başarılı', detail: 'Başarıyla Kaydedildi!'});
+    this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Başarıyla Kaydedildi!' });
   }
 
   showError() {
-    this.messageService.add({severity:'error', summary: 'Hata', detail: 'Kayıt başarısız!'});
+    this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Kayıt başarısız!' });
   }
 
   showDeleteSuccess() {
-    this.messageService.add({severity:'success', summary: 'Başarılı', detail: 'Sınav Silindi!'});
+    this.messageService.add({ severity: 'success', summary: 'Başarılı', detail: 'Sınav Silindi!' });
   }
 
   showDeleteError() {
-    this.messageService.add({severity:'error', summary: 'Hata', detail: 'Silme başarısız!'});
+    this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Silme başarısız!' });
   }
 
   showInfo() {
-    this.messageService.add({severity:'info', summary: 'Bilgi', detail: 'Bilgi mesajı'});
+    this.messageService.add({ severity: 'info', summary: 'Bilgi', detail: 'Bilgi mesajı' });
   }
 
   getExamProgressByStudentId(studentId: number) {
@@ -525,9 +525,9 @@ export class StuTrackingComponent implements OnInit {
       /*this.newExam.socialD !== null && this.newExam.socialY !== null && */this.newExam.socialN !== null
     ) {
       this.newExam.studentId = this.student.studentId;
-      this.trackingService.saveExamProgress(this.newExam).subscribe(exam => this.examList.push({ ...exam }) );
+      this.trackingService.saveExamProgress(this.newExam).subscribe(exam => this.examList.push({ ...exam }));
       this.newExam = new ExamProgress();
-      var tempAcc = document.getElementById("panel5")as HTMLElement;
+      var tempAcc = document.getElementById("panel5") as HTMLElement;
       tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
       tempAcc.style.minHeight = "375px";
       this.showSuccess();
@@ -558,10 +558,10 @@ export class StuTrackingComponent implements OnInit {
 
   deleteExam(examId: number) {
     this.trackingService.deleteExamProgress(examId).subscribe(exam => {
-      if(exam) {
+      if (exam) {
         this.examList = this.examList.filter(exam => exam.examId !== examId);
         this.showDeleteSuccess();
-        var tempAcc = document.getElementById("panel5")as HTMLElement;
+        var tempAcc = document.getElementById("panel5") as HTMLElement;
         tempAcc.style.maxHeight = tempAcc.scrollHeight + "px";
         tempAcc.style.minHeight = "375px";
       } else {
@@ -569,4 +569,51 @@ export class StuTrackingComponent implements OnInit {
       }
     });
   }
+
+  getUniqueBooks(): Array<{ LABEL: string; BOOK_ID: number; GIVEN_BOOK_ID: number }> {
+    const arr: Array<{ LABEL: string; BOOK_ID: number; GIVEN_BOOK_ID: number }> = [];
+    const seen = new Set<number>();
+
+    this.givenBooks.forEach(item => {
+      if (!seen.has(item.bookId)) {
+        seen.add(item.bookId);
+
+        const publisherName =
+          this.publishers.find(p => p.publisherId === item.publisherId)?.publisherName || 'Yayın';
+        const bookLabel = (item as any).bookName || (item as any).BOOK_NAME || publisherName;
+
+        arr.push({
+          LABEL: bookLabel,
+          BOOK_ID: item.bookId,
+          GIVEN_BOOK_ID: item.givenBookId
+        });
+      }
+    });
+
+    return arr;
+  }
+
+  getUniqueSubjectsFlat(): Array<{ SUBJECT: string; SUBJECT_ID: number }> {
+    const map = new Map<number, string>();
+    this.subjectsForTrack.forEach(s => {
+      if (!map.has(s.subjectId)) {
+        map.set(s.subjectId, s.subject);
+      }
+    });
+    return Array.from(map.entries()).map(([SUBJECT_ID, SUBJECT]) => ({ SUBJECT_ID, SUBJECT }));
+  }
+
+  getProgress(subjectId: number, bookId: number): number {
+    const m = this.bookProgresses.find(x => x.subjectId === subjectId && x.bookId === bookId);
+    return m ? (m.progress ?? 0) : 0;
+  }
+
+  getTdColorClass(subjectId: number, bookId: number): string {
+    switch (this.getProgress(subjectId, bookId)) {
+      case 2: return 'td-green';
+      case 1: return 'td-orange';
+      default: return 'td-red';
+    }
+  }
+
 }

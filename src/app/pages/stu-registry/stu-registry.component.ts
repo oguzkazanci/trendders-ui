@@ -64,6 +64,7 @@ export class StuRegistryComponent implements OnInit {
   constructor(private studentsService: StudentsService, private sharedService: SharedService, private teacherService: TeachersService,
     private messageService: MessageService, private confirmServ: ConfirmationService) { 
     this.student = new Students();
+    this.student.advancePrince = 0;
     this.package = new Package();
   }
 

@@ -16,6 +16,7 @@ export class Students {
     gradeId: number;
     packageId: number;
     totalPrice: number;
+    advancePrince: number;
     startMonth: number;
     installment: number;
     explanation: string;

@@ -329,3 +329,35 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.cell-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.subject-text {
+  display: inline-block;
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.td-red    { background-color: #f8d7da; }
+.td-orange { background-color: #ffe8cc; }
+.td-green  { background-color: #d4edda; }
+
+table td.td-red,
+table td.td-orange,
+table td.td-green {
+  transition: background-color .15s ease-in-out;
+}
+
+.cell-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
