@@ -361,3 +361,11 @@ table td.td-green {
   gap: 6px;
 }
 
+.tr-red    { background-color: #f8d7da; }
+.tr-orange { background-color: #ffe8cc; }
+.tr-green  { background-color: #d4edda; }
+
+.actions-cell {
+  text-align: right;
+}
+

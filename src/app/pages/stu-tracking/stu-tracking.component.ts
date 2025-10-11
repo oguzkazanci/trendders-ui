@@ -616,4 +616,28 @@ export class StuTrackingComponent implements OnInit {
     }
   }
 
+  getSubjectProgressValue(foyKod: string): number {
+    const p = this.findSubjectProgress(foyKod);
+    return (p?.progress ?? 0);
+  }
+
+  getRowColorClass(progress: number): string {
+    switch (progress) {
+      case 2: return 'tr-green';
+      case 1: return 'tr-orange';
+      default: return 'tr-red';
+    }
+  }
+
+  ensureSubjectProgress(subject: any): SubjectProgress {
+    const existing = this.findSubjectProgress(subject.kod);
+    if (existing) return existing;
+
+    return {
+      foyId: subject.foyId,
+      foyKod: subject.kod,
+      studentId: this.student?.studentId,
+      progress: 0
+    } as SubjectProgress;
+  }
 }

@@ -303,39 +303,33 @@
                       <th>Kod</th>
                       <th>Konu</th>
                       <th>Adet</th>
-                      <th>İlerleme</th>
+                      <th>İşlem</th>
                     </tr>
                   </thead>
+
                   <tbody style="text-align: center;">
-                    <tr *ngFor="let subject of foyLessonSubjects">
+                    <tr *ngFor="let subject of foyLessonSubjects"
+                      [ngClass]="getRowColorClass(getSubjectProgressValue(subject.kod))">
                       <td style="width: 25px;">{{ subject.kod }}</td>
                       <td style="text-align: left;">{{ subject.ders }}</td>
                       <td>{{ subject.seans }}</td>
-                      <ng-container *ngIf="findSubjectProgress(subject.kod); else noMatch">
-                        <td [ngClass]="getStatusClass(findSubjectProgress(subject.kod)?.progress)">
+
+                      <td class="actions-cell">
+                        <div class="cell-actions">
                           <button type="button" class="btn btn-success btn-sm"
-                            *ngIf="findSubjectProgress(subject.kod)?.progress != 2"
-                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 2)">
+                            *ngIf="getSubjectProgressValue(subject.kod) !== 2"
+                            (click)="changeSubjectProgress(ensureSubjectProgress(subject), 2)">
                           </button>
                           <button type="button" class="btn btn-warning btn-sm"
-                            *ngIf="findSubjectProgress(subject.kod)?.progress != 1"
-                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 1)">
+                            *ngIf="getSubjectProgressValue(subject.kod) !== 1"
+                            (click)="changeSubjectProgress(ensureSubjectProgress(subject), 1)">
                           </button>
                           <button type="button" class="btn btn-danger btn-sm"
-                            *ngIf="findSubjectProgress(subject.kod)?.progress != 0"
-                            (click)="changeSubjectProgress(findSubjectProgress(subject.kod), 0)">
+                            *ngIf="getSubjectProgressValue(subject.kod) !== 0"
+                            (click)="changeSubjectProgress(ensureSubjectProgress(subject), 0)">
                           </button>
-                        </td>
-                      </ng-container>
-
-                      <ng-template #noMatch>
-                        <td [ngClass]="getStatusClass(null)">
-                          <button type="button" class="btn btn-success btn-sm"
-                            (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 2)"></button>
-                          <button type="button" class="btn btn-warning btn-sm"
-                            (click)="changeSubjectProgress({'foyId': subject.foyId, 'foyKod': subject.kod}, 1)"></button>
-                        </td>
-                      </ng-template>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
