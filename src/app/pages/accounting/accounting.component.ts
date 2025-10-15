@@ -373,13 +373,13 @@ export class AccountingComponent implements OnInit {
   controlButtonAllPayment(): void {
     var state = 0;
     (document.getElementById("pdfButton")as HTMLButtonElement).style.visibility = 'hidden';
-    (document.getElementById("excelButton")as HTMLButtonElement).style.visibility = 'hidden';
+    //(document.getElementById("excelButton")as HTMLButtonElement).style.visibility = 'hidden';
     this.payments.forEach((currentValue, index) => {
       if (currentValue.paymentStatus == 0){    
         state = 1;
       }
       (document.getElementById("pdfButton")as HTMLButtonElement).style.visibility = 'visible';
-      (document.getElementById("excelButton")as HTMLButtonElement).style.visibility = 'visible';
+      //(document.getElementById("excelButton")as HTMLButtonElement).style.visibility = 'visible';
     });
     if (state == 1)
       (document.getElementById("buttonAllPayment")as HTMLButtonElement).style.visibility = 'visible';
